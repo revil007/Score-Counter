@@ -1,6 +1,6 @@
 {
-  "name": "Skor Lawan",
-  "short_name": "Skor Lawan",
+  "name": "Score Counter",
+  "short_name": "Score Counter",
   "description": "Score counter perlawanan — pilih Monitor (papar skor besar) atau Controller (kawal dari jauh).",
   "start_url": "./index.html",
   "scope": "./",
