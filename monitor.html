@@ -377,7 +377,18 @@
   }
 
   .link-badge.connected .link-dot { background: var(--p2); }
-  .link-badge.connected #linkStatus { color: var(--p2); }
+  .link-badge.connected .link-status { color: var(--p2); }
+
+  .setup-link-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    box-shadow: 0 1px 3px var(--shadow);
+  }
 
   .header-actions {
     display: flex;
@@ -655,6 +666,10 @@
 </style>
 
 <div class="setup" id="setupScreen">
+  <span class="link-badge setup-link-badge" id="linkBadgeSetup">
+    <span class="link-dot" id="linkDotSetup"></span>
+    <span class="link-status" id="linkStatusSetup">Kod: ----</span>
+  </span>
   <h1 id="setupTitle">Sedia untuk perlawanan?</h1>
   <div class="setup-fields">
     <div class="field team-a">
@@ -708,7 +723,7 @@
       <span class="match-label" id="matchLabel">Score Counter</span>
       <span class="link-badge" id="linkBadge">
         <span class="link-dot" id="linkDot"></span>
-        <span id="linkStatus">Kod: ----</span>
+        <span class="link-status" id="linkStatus">Kod: ----</span>
       </span>
     </span>
     <div class="header-actions">
@@ -1197,10 +1212,14 @@
   })();
 
   // ---------- Controller link (PeerJS) ----------
-  const linkBadge = document.getElementById('linkBadge');
-  const linkStatus = document.getElementById('linkStatus');
+  const linkBadges = [document.getElementById('linkBadge'), document.getElementById('linkBadgeSetup')];
+  const linkStatuses = [document.getElementById('linkStatus'), document.getElementById('linkStatusSetup')];
   let peer = null;
   let controllerConns = [];
+
+  function setLinkStatus(text) {
+    linkStatuses.forEach((s) => { s.textContent = text; });
+  }
 
   function currentStatePayload() {
     return {
@@ -1226,16 +1245,16 @@
 
   function updateLinkUI() {
     if (controllerConns.length) {
-      linkBadge.classList.add('connected');
-      linkStatus.textContent = controllerConns.length > 1
+      linkBadges.forEach((b) => b.classList.add('connected'));
+      setLinkStatus(controllerConns.length > 1
         ? controllerConns.length + ' Controller Disambung'
-        : 'Controller Disambung';
+        : 'Controller Disambung');
     } else if (peer && peer.id) {
-      linkBadge.classList.remove('connected');
-      linkStatus.textContent = 'Kod: ' + roomCodeFromPeerId(peer.id);
+      linkBadges.forEach((b) => b.classList.remove('connected'));
+      setLinkStatus('Kod: ' + roomCodeFromPeerId(peer.id));
     } else {
-      linkBadge.classList.remove('connected');
-      linkStatus.textContent = 'Menyambung...';
+      linkBadges.forEach((b) => b.classList.remove('connected'));
+      setLinkStatus('Menyambung...');
     }
   }
 
@@ -1289,11 +1308,11 @@
   function initPeerHost(attempt) {
     attempt = attempt || 0;
     if (attempt > 5) {
-      linkStatus.textContent = 'Gagal sambung rangkaian';
+      setLinkStatus('Gagal sambung rangkaian');
       return;
     }
     if (typeof Peer === 'undefined') {
-      linkStatus.textContent = 'Perlu Internet untuk sambung';
+      setLinkStatus('Perlu Internet untuk sambung');
       return;
     }
     const code = String(1000 + Math.floor(Math.random() * 9000));
@@ -1322,7 +1341,7 @@
         p.destroy();
         initPeerHost(attempt + 1);
       } else {
-        linkStatus.textContent = 'Ralat sambungan';
+        setLinkStatus('Ralat sambungan');
       }
     });
   }
