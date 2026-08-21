@@ -390,6 +390,25 @@
     box-shadow: 0 1px 3px var(--shadow);
   }
 
+  .link-disconnect-btn {
+    display: none;
+    font-family: inherit;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.3rem 0.65rem;
+    margin-left: 0.5rem;
+    cursor: pointer;
+  }
+
+  .link-disconnect-btn:hover { border-color: var(--danger); color: var(--danger); }
+  .link-badge.connected .link-disconnect-btn { display: inline-block; }
+
   .header-actions {
     display: flex;
     gap: 0.5rem;
@@ -669,6 +688,7 @@
   <span class="link-badge setup-link-badge" id="linkBadgeSetup">
     <span class="link-dot" id="linkDotSetup"></span>
     <span class="link-status" id="linkStatusSetup">Kod: ----</span>
+    <button class="link-disconnect-btn" id="linkDisconnectBtnSetup" type="button">Putus</button>
   </span>
   <h1 id="setupTitle">Sedia untuk perlawanan?</h1>
   <div class="setup-fields">
@@ -724,6 +744,7 @@
       <span class="link-badge" id="linkBadge">
         <span class="link-dot" id="linkDot"></span>
         <span class="link-status" id="linkStatus">Kod: ----</span>
+        <button class="link-disconnect-btn" id="linkDisconnectBtn" type="button">Putus</button>
       </span>
     </span>
     <div class="header-actions">
@@ -1216,6 +1237,33 @@
   const linkStatuses = [document.getElementById('linkStatus'), document.getElementById('linkStatusSetup')];
   let peer = null;
   let controllerConns = [];
+  const connLastSeen = new Map();
+  const HEARTBEAT_TIMEOUT = 12000; // ms — if a controller hasn't pinged in this long, treat it as dropped
+
+  function disconnectAllControllers() {
+    controllerConns.forEach((c) => { try { c.close && c.close(); } catch (err) {} });
+    controllerConns = [];
+    connLastSeen.clear();
+    updateLinkUI();
+  }
+
+  // Some connections go dead silently (wifi drop, app killed) without ever firing
+  // a 'close' event, which used to leave the badge stuck on "Controller Disambung"
+  // and blocked the same controller from reconnecting. Controllers ping every few
+  // seconds; if we stop hearing from one, we drop it ourselves.
+  setInterval(() => {
+    const now = Date.now();
+    const stale = controllerConns.filter((c) => {
+      const seen = connLastSeen.get(c);
+      return seen !== undefined && (now - seen) > HEARTBEAT_TIMEOUT;
+    });
+    if (stale.length) {
+      stale.forEach((c) => { try { c.close && c.close(); } catch (err) {} });
+      controllerConns = controllerConns.filter((c) => !stale.includes(c));
+      stale.forEach((c) => connLastSeen.delete(c));
+      updateLinkUI();
+    }
+  }, 4000);
 
   function setLinkStatus(text) {
     linkStatuses.forEach((s) => { s.textContent = text; });
@@ -1302,6 +1350,8 @@
       case 'setup':
         applyRemoteSetup(msg);
         break;
+      case 'ping':
+        break; // heartbeat only — connLastSeen already updated by the caller
     }
   }
 
@@ -1325,13 +1375,19 @@
 
     p.on('connection', (conn) => {
       controllerConns.push(conn);
+      connLastSeen.set(conn, Date.now());
       conn.on('open', () => {
+        connLastSeen.set(conn, Date.now());
         updateLinkUI();
         try { conn.send(currentStatePayload()); } catch (err) {}
       });
-      conn.on('data', handleControllerMessage);
+      conn.on('data', (data) => {
+        connLastSeen.set(conn, Date.now());
+        handleControllerMessage(data);
+      });
       conn.on('close', () => {
         controllerConns = controllerConns.filter((c) => c !== conn);
+        connLastSeen.delete(conn);
         updateLinkUI();
       });
     });
@@ -1348,6 +1404,9 @@
 
   initPeerHost();
   updateLinkUI();
+
+  document.getElementById('linkDisconnectBtn').addEventListener('click', disconnectAllControllers);
+  document.getElementById('linkDisconnectBtnSetup').addEventListener('click', disconnectAllControllers);
 
   // ---------- Offline link (raw WebRTC + QR, no internet needed after page load) ----------
   const offlineModal = document.getElementById('offlineModal');
@@ -1381,6 +1440,7 @@
     return {
       get open() { return dc.readyState === 'open'; },
       send: (obj) => dc.send(JSON.stringify(obj)),
+      close: () => { try { dc.close(); } catch (err) {} },
       _dc: dc,
     };
   }
@@ -1409,18 +1469,22 @@
     if (offlinePc) { try { offlinePc.close(); } catch (err) {} }
     offlinePc = new RTCPeerConnection({ iceServers: [] });
     const dc = offlinePc.createDataChannel('score');
+    let wrapped = null;
     dc.onopen = () => {
-      const wrapped = wrapDataChannel(dc);
+      wrapped = wrapDataChannel(dc);
       controllerConns.push(wrapped);
+      connLastSeen.set(wrapped, Date.now());
       updateLinkUI();
       try { wrapped.send(currentStatePayload()); } catch (err) {}
       offlineModal.classList.remove('visible');
     };
     dc.onmessage = (e) => {
+      if (wrapped) connLastSeen.set(wrapped, Date.now());
       try { handleControllerMessage(JSON.parse(e.data)); } catch (err) {}
     };
     dc.onclose = () => {
       controllerConns = controllerConns.filter((c) => c._dc !== dc);
+      if (wrapped) connLastSeen.delete(wrapped);
       updateLinkUI();
     };
 

@@ -249,14 +249,35 @@
     cursor: pointer;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
-    border-left: 1px solid var(--line);
     transition: background-color 0.12s ease;
   }
 
-  .pad:first-child { border-left: none; }
-  .pad.p1 { --accent: var(--p1); --tint: var(--p1-soft); }
-  .pad.p2 { --accent: var(--p2); --tint: var(--p2-soft); }
+  .pad.p1 { --accent: var(--p1); --tint: var(--p1-soft); border-left: none; order: 1; }
+  .pad.p2 { --accent: var(--p2); --tint: var(--p2-soft); border-left: 1px solid var(--line); order: 2; }
   .pad:active { background-color: var(--tint); }
+
+  /* Mirror mode: flips which side each team appears on, for a referee facing
+     the opposite direction to the monitor/court display. Local display only —
+     does not change which team is "team 1" in the actual score data. */
+  main.mirrored .pad.p1 { border-left: 1px solid var(--line); order: 2; }
+  main.mirrored .pad.p2 { border-left: none; order: 1; }
+
+  .mirror-btn {
+    font-family: inherit;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+  }
+
+  .mirror-btn:hover { border-color: var(--ink-soft); color: var(--ink); }
+  .mirror-btn.active { border-color: var(--ink); color: var(--ink); background: var(--surface); }
 
   .pad-name {
     font-size: 0.85rem;
@@ -458,10 +479,13 @@
 <div id="controlScreen" style="display: none;">
   <header>
     <span class="header-label"><span class="link-dot"></span>Disambung</span>
-    <button class="disconnect-btn" id="disconnectBtn" type="button">Putus</button>
+    <span style="display: flex; gap: 0.5rem;">
+      <button class="mirror-btn" id="mirrorBtn" type="button" aria-pressed="false">⇄ Cermin</button>
+      <button class="disconnect-btn" id="disconnectBtn" type="button">Putus</button>
+    </span>
   </header>
 
-  <main>
+  <main id="controlMain">
     <div class="pad p1" id="pad1" role="button" tabindex="0" aria-label="Tambah skor Pasukan 1">
       <span class="pad-name" id="padName1">Pasukan 1</span>
       <span class="pad-score" id="padScore1">0</span>
@@ -572,6 +596,11 @@
       try { conn.send(msg); } catch (err) {}
     }
   }
+
+  // Let the monitor know we're still alive, even if we're not tapping anything —
+  // otherwise a silently-dropped connection can leave the monitor showing
+  // "Controller Disambung" forever and block us from reconnecting with the same code.
+  setInterval(() => send({ type: 'ping' }), 4000);
 
   function connectToCode(code) {
     if (typeof Peer === 'undefined') {
@@ -771,6 +800,28 @@
     if (offlinePc) { try { offlinePc.close(); } catch (err) {} offlinePc = null; }
     showConnectScreen();
   });
+
+  // ---------- Mirror display (referee faces the opposite way to the monitor/court) ----------
+  const MIRROR_KEY = 'skor-lawan-controller-mirror';
+  const controlMain = document.getElementById('controlMain');
+  const mirrorBtn = document.getElementById('mirrorBtn');
+
+  function setMirror(on) {
+    controlMain.classList.toggle('mirrored', on);
+    mirrorBtn.classList.toggle('active', on);
+    mirrorBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    try { localStorage.setItem(MIRROR_KEY, on ? '1' : '0'); } catch (err) {}
+  }
+
+  mirrorBtn.addEventListener('click', () => {
+    setMirror(!controlMain.classList.contains('mirrored'));
+  });
+
+  (function restoreMirror() {
+    let saved = '0';
+    try { saved = localStorage.getItem(MIRROR_KEY) || '0'; } catch (err) {}
+    setMirror(saved === '1');
+  })();
 
   function bindPad(padEl, minusEl, team) {
     padEl.addEventListener('click', (e) => {
