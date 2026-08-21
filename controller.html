@@ -1,0 +1,635 @@
+<title>Skor Lawan — Controller</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1c1a17">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Skor Controller">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script src="https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script src="https://unpkg.com/jsqr@1.4.0/dist/jsQR.js"></script>
+<style>
+  :root {
+    --bg: #f4f1ea;
+    --ink: #2a2622;
+    --ink-soft: #6b6258;
+    --line: #dcd4c6;
+    --surface: #ffffff;
+    --p1: #b3261e;
+    --p1-soft: #f6dcd9;
+    --p2: #1e7d42;
+    --p2-soft: #d7ecdd;
+    --danger: #a63d3d;
+    --shadow: rgba(42, 38, 34, 0.08);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1c1a17;
+      --ink: #f1ece2;
+      --ink-soft: #a89c8c;
+      --line: #3a352e;
+      --surface: #262320;
+      --p1: #f0776b;
+      --p1-soft: #3d211e;
+      --p2: #5fd68f;
+      --p2-soft: #1a3524;
+      --danger: #d97a7a;
+      --shadow: rgba(0, 0, 0, 0.35);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #1c1a17;
+    --ink: #f1ece2;
+    --ink-soft: #a89c8c;
+    --line: #3a352e;
+    --surface: #262320;
+    --p1: #f0776b;
+    --p1-soft: #3d211e;
+    --p2: #5fd68f;
+    --p2-soft: #1a3524;
+    --danger: #d97a7a;
+    --shadow: rgba(0, 0, 0, 0.35);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Manrope", "Segoe UI", system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ---------- Connect screen ---------- */
+
+  .connect {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.75rem;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+  }
+
+  .connect h1 {
+    margin: 0;
+    font-size: clamp(1.4rem, 5vw, 2rem);
+    text-wrap: balance;
+  }
+
+  .connect p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    max-width: 26rem;
+  }
+
+  .code-input {
+    font-family: "Bebas Neue", "Arial Narrow", sans-serif;
+    font-size: clamp(2.5rem, 12vw, 3.5rem);
+    letter-spacing: 0.3em;
+    text-align: center;
+    width: 100%;
+    max-width: 16rem;
+    padding: 0.6rem 0.4rem 0.6rem 0.7rem;
+    border-radius: 0.8rem;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .code-input:focus-visible { outline: 2px solid var(--ink-soft); outline-offset: 2px; }
+
+  .connect-btn {
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--surface);
+    background: var(--ink);
+    border: none;
+    border-radius: 999px;
+    padding: 0.9rem 2.6rem;
+    cursor: pointer;
+    box-shadow: 0 2px 10px var(--shadow);
+  }
+
+  .connect-btn:disabled { opacity: 0.5; cursor: default; }
+  .connect-btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+  .connect-status {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+    min-height: 1.2rem;
+  }
+
+  .connect-status.error { color: var(--danger); }
+
+  .divider-row {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    width: 100%;
+    max-width: 16rem;
+    color: var(--ink-soft);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .divider-row::before,
+  .divider-row::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  #offlineVideo {
+    width: 100%;
+    max-width: 260px;
+    border-radius: 0.6rem;
+    border: 1px solid var(--line);
+    background: #000;
+  }
+
+  #offlineAnswerCanvas {
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+    border-radius: 0.6rem;
+    border: 1px solid var(--line);
+  }
+
+  /* ---------- Control screen ---------- */
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--line);
+    flex-shrink: 0;
+  }
+
+  .header-label {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .link-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--p2);
+    flex-shrink: 0;
+  }
+
+  .disconnect-btn {
+    font-family: inherit;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.4rem 0.9rem;
+    cursor: pointer;
+  }
+
+  .disconnect-btn:hover { border-color: var(--danger); color: var(--danger); }
+
+  main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .pad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 1rem 0.5rem;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    border-left: 1px solid var(--line);
+    transition: background-color 0.12s ease;
+  }
+
+  .pad:first-child { border-left: none; }
+  .pad.p1 { --accent: var(--p1); --tint: var(--p1-soft); }
+  .pad.p2 { --accent: var(--p2); --tint: var(--p2-soft); }
+  .pad:active { background-color: var(--tint); }
+
+  .pad-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    max-width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .pad-score {
+    font-family: "Bebas Neue", "Arial Narrow", sans-serif;
+    font-size: clamp(4rem, 20vw, 7rem);
+    line-height: 1;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .pad-hint {
+    font-size: 0.68rem;
+    color: var(--ink-soft);
+  }
+
+  .pad-minus {
+    font-family: inherit;
+    font-size: 1.1rem;
+    font-weight: 700;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink-soft);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px var(--shadow);
+  }
+
+  .pad-minus:hover { border-color: var(--accent); color: var(--accent); }
+
+  .control-footer {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.75rem;
+    border-top: 1px solid var(--line);
+    flex-shrink: 0;
+  }
+
+  .footer-btn {
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.55rem 1.2rem;
+    cursor: pointer;
+  }
+
+  .footer-btn:hover { border-color: var(--ink-soft); color: var(--ink); }
+</style>
+
+<div class="connect" id="connectScreen">
+  <h1>Sambung ke Monitor</h1>
+  <p>Masukkan kod 4-digit yang dipaparkan di skrin monitor (tablet) untuk mula kawal skor dari sini. Perlukan internet.</p>
+  <input class="code-input" id="codeInput" type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="0000" autocomplete="off">
+  <button class="connect-btn" id="connectBtn" type="button">Sambung</button>
+  <span class="connect-status" id="connectStatus"></span>
+
+  <div class="divider-row"><span>atau</span></div>
+
+  <button class="footer-btn" id="offlineScanBtn" type="button">Scan QR (Offline)</button>
+</div>
+
+<div class="connect" id="offlineScanScreen" style="display: none;">
+  <h1>Scan QR Monitor</h1>
+  <p>Arahkan kamera ke QR yang dipaparkan di skrin monitor (tablet).</p>
+  <video id="offlineVideo" playsinline muted></video>
+  <span class="connect-status" id="offlineScanStatus">Membuka kamera...</span>
+  <button class="footer-btn" id="offlineScanBackBtn" type="button">Batal</button>
+</div>
+
+<div class="connect" id="offlineAnswerScreen" style="display: none;">
+  <h1>Tunjuk QR Ini di Monitor</h1>
+  <p>Tunjuk skrin ni kat monitor (tablet) untuk di-scan balik. Sambungan akan bermula secara automatik lepas monitor scan.</p>
+  <canvas id="offlineAnswerCanvas"></canvas>
+  <span class="connect-status" id="offlineAnswerStatus">Menunggu monitor scan...</span>
+</div>
+
+<div id="controlScreen" style="display: none;">
+  <header>
+    <span class="header-label"><span class="link-dot"></span>Disambung</span>
+    <button class="disconnect-btn" id="disconnectBtn" type="button">Putus</button>
+  </header>
+
+  <main>
+    <div class="pad p1" id="pad1" role="button" tabindex="0" aria-label="Tambah skor Pasukan 1">
+      <span class="pad-name" id="padName1">Pasukan 1</span>
+      <span class="pad-score" id="padScore1">0</span>
+      <button class="pad-minus" id="padMinus1" type="button" aria-label="Tolak skor Pasukan 1">&minus;</button>
+      <span class="pad-hint">Tap untuk +1</span>
+    </div>
+    <div class="pad p2" id="pad2" role="button" tabindex="0" aria-label="Tambah skor Pasukan 2">
+      <span class="pad-name" id="padName2">Pasukan 2</span>
+      <span class="pad-score" id="padScore2">0</span>
+      <button class="pad-minus" id="padMinus2" type="button" aria-label="Tolak skor Pasukan 2">&minus;</button>
+      <span class="pad-hint">Tap untuk +1</span>
+    </div>
+  </main>
+
+  <div class="control-footer">
+    <button class="footer-btn" id="ctrlSwapBtn" type="button">Tukar Tempat</button>
+    <button class="footer-btn" id="ctrlResetBtn" type="button">Reset</button>
+  </div>
+</div>
+
+<script>
+  const connectScreen = document.getElementById('connectScreen');
+  const controlScreen = document.getElementById('controlScreen');
+  const codeInput = document.getElementById('codeInput');
+  const connectBtn = document.getElementById('connectBtn');
+  const connectStatus = document.getElementById('connectStatus');
+
+  const padName1 = document.getElementById('padName1');
+  const padName2 = document.getElementById('padName2');
+  const padScore1 = document.getElementById('padScore1');
+  const padScore2 = document.getElementById('padScore2');
+
+  let peer = null;
+  let conn = null;
+
+  function setStatus(text, isError) {
+    connectStatus.textContent = text;
+    connectStatus.classList.toggle('error', !!isError);
+  }
+
+  function showControlScreen() {
+    connectScreen.style.display = 'none';
+    controlScreen.style.display = 'flex';
+    controlScreen.style.flexDirection = 'column';
+    controlScreen.style.flex = '1';
+  }
+
+  function showConnectScreen() {
+    controlScreen.style.display = 'none';
+    connectScreen.style.display = 'flex';
+    codeInput.value = '';
+    codeInput.focus();
+  }
+
+  function applyState(state) {
+    padName1.textContent = state.name1 || 'Pasukan 1';
+    padName2.textContent = state.name2 || 'Pasukan 2';
+    padScore1.textContent = state.s1 ?? 0;
+    padScore2.textContent = state.s2 ?? 0;
+  }
+
+  function send(msg) {
+    if (conn && conn.open) {
+      try { conn.send(msg); } catch (err) {}
+    }
+  }
+
+  function connectToCode(code) {
+    if (typeof Peer === 'undefined') {
+      setStatus('Perlu sambungan Internet.', true);
+      return;
+    }
+    connectBtn.disabled = true;
+    setStatus('Menyambung...');
+
+    if (peer) { try { peer.destroy(); } catch (err) {} }
+    peer = new Peer();
+
+    peer.on('open', () => {
+      conn = peer.connect('skorlawan-' + code, { reliable: true });
+
+      conn.on('open', () => {
+        setStatus('');
+        connectBtn.disabled = false;
+        showControlScreen();
+      });
+
+      conn.on('data', (msg) => {
+        if (msg && msg.type === 'state') applyState(msg);
+      });
+
+      conn.on('close', () => {
+        setStatus('Sambungan terputus.', true);
+        connectBtn.disabled = false;
+        showConnectScreen();
+      });
+
+      conn.on('error', () => {
+        setStatus('Tidak jumpa monitor dengan kod ini.', true);
+        connectBtn.disabled = false;
+      });
+    });
+
+    peer.on('error', () => {
+      setStatus('Tidak jumpa monitor dengan kod ini.', true);
+      connectBtn.disabled = false;
+    });
+  }
+
+  // ---------- Offline link (raw WebRTC + QR, no internet needed after page load) ----------
+  const offlineScanScreen = document.getElementById('offlineScanScreen');
+  const offlineAnswerScreen = document.getElementById('offlineAnswerScreen');
+  const offlineVideo = document.getElementById('offlineVideo');
+  const offlineScanStatus = document.getElementById('offlineScanStatus');
+  const offlineAnswerCanvas = document.getElementById('offlineAnswerCanvas');
+  const offlineAnswerStatus = document.getElementById('offlineAnswerStatus');
+
+  let offlinePc = null;
+  let offlineStream = null;
+  let offlineScanning = false;
+
+  function waitIceGatheringComplete(pc) {
+    return new Promise((resolve) => {
+      if (pc.iceGatheringState === 'complete') { resolve(); return; }
+      function check() {
+        if (pc.iceGatheringState === 'complete') {
+          pc.removeEventListener('icegatheringstatechange', check);
+          resolve();
+        }
+      }
+      pc.addEventListener('icegatheringstatechange', check);
+      setTimeout(resolve, 4000);
+    });
+  }
+
+  function stopOfflineCamera() {
+    offlineScanning = false;
+    if (offlineStream) {
+      offlineStream.getTracks().forEach((t) => t.stop());
+      offlineStream = null;
+    }
+  }
+
+  function showScreen(el) {
+    [connectScreen, offlineScanScreen, offlineAnswerScreen, controlScreen].forEach((s) => {
+      s.style.display = 'none';
+    });
+    el.style.display = 'flex';
+    el.style.flexDirection = 'column';
+  }
+
+  async function startOfflineScan() {
+    showScreen(offlineScanScreen);
+    offlineScanStatus.textContent = 'Membuka kamera...';
+    offlineScanStatus.classList.remove('error');
+
+    try {
+      offlineStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+    } catch (err) {
+      offlineScanStatus.textContent = 'Tak dapat akses kamera. Semak kebenaran kamera.';
+      offlineScanStatus.classList.add('error');
+      return;
+    }
+
+    offlineVideo.srcObject = offlineStream;
+    await offlineVideo.play().catch(() => {});
+    offlineScanning = true;
+    offlineScanStatus.textContent = 'Mencari QR...';
+
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    function loop() {
+      if (!offlineScanning) return;
+      if (offlineVideo.readyState === offlineVideo.HAVE_ENOUGH_DATA) {
+        canvas.width = offlineVideo.videoWidth;
+        canvas.height = offlineVideo.videoHeight;
+        ctx.drawImage(offlineVideo, 0, 0, canvas.width, canvas.height);
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const code = jsQR(imageData.data, imageData.width, imageData.height);
+        if (code) {
+          handleScannedOffer(code.data);
+          return;
+        }
+      }
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  }
+
+  async function handleScannedOffer(text) {
+    let msg;
+    try { msg = JSON.parse(text); } catch (err) { return; }
+    if (!msg || msg.t !== 'offer') return;
+    stopOfflineCamera();
+
+    if (offlinePc) { try { offlinePc.close(); } catch (err) {} }
+    offlinePc = new RTCPeerConnection({ iceServers: [] });
+
+    offlinePc.ondatachannel = (e) => {
+      const dc = e.channel;
+      conn = {
+        get open() { return dc.readyState === 'open'; },
+        send: (obj) => dc.send(JSON.stringify(obj)),
+        close: () => dc.close(),
+      };
+      dc.onopen = () => showControlScreen();
+      dc.onmessage = (ev) => {
+        try {
+          const m = JSON.parse(ev.data);
+          if (m && m.type === 'state') applyState(m);
+        } catch (err) {}
+      };
+      dc.onclose = () => {
+        setStatus('Sambungan terputus.', true);
+        showConnectScreen();
+      };
+    };
+
+    try {
+      await offlinePc.setRemoteDescription({ type: 'offer', sdp: msg.sdp });
+      const answer = await offlinePc.createAnswer();
+      await offlinePc.setLocalDescription(answer);
+      await waitIceGatheringComplete(offlinePc);
+      showScreen(offlineAnswerScreen);
+      const payload = JSON.stringify({ t: 'answer', sdp: offlinePc.localDescription.sdp });
+      await QRCode.toCanvas(offlineAnswerCanvas, payload, { width: 260, margin: 1 });
+      offlineAnswerStatus.textContent = 'Menunggu monitor scan...';
+    } catch (err) {
+      offlineScanStatus.textContent = 'Ralat sambungan. Cuba lagi.';
+      offlineScanStatus.classList.add('error');
+      showScreen(offlineScanScreen);
+    }
+  }
+
+  document.getElementById('offlineScanBtn').addEventListener('click', startOfflineScan);
+  document.getElementById('offlineScanBackBtn').addEventListener('click', () => {
+    stopOfflineCamera();
+    showScreen(connectScreen);
+  });
+
+  connectBtn.addEventListener('click', () => {
+    const code = codeInput.value.trim();
+    if (code.length !== 4) {
+      setStatus('Sila masukkan kod 4-digit.', true);
+      return;
+    }
+    connectToCode(code);
+  });
+
+  codeInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') connectBtn.click();
+  });
+
+  document.getElementById('disconnectBtn').addEventListener('click', () => {
+    if (conn) { try { conn.close(); } catch (err) {} }
+    if (offlinePc) { try { offlinePc.close(); } catch (err) {} offlinePc = null; }
+    showConnectScreen();
+  });
+
+  function bindPad(padEl, minusEl, team) {
+    padEl.addEventListener('click', (e) => {
+      if (e.target === minusEl) return;
+      send({ type: 'increment', team });
+    });
+    padEl.addEventListener('keydown', (e) => {
+      if ((e.key === 'Enter' || e.key === ' ') && e.target === padEl) {
+        e.preventDefault();
+        send({ type: 'increment', team });
+      }
+    });
+    minusEl.addEventListener('click', (e) => {
+      e.stopPropagation();
+      send({ type: 'decrement', team });
+    });
+  }
+
+  bindPad(document.getElementById('pad1'), document.getElementById('padMinus1'), 1);
+  bindPad(document.getElementById('pad2'), document.getElementById('padMinus2'), 2);
+
+  document.getElementById('ctrlSwapBtn').addEventListener('click', () => send({ type: 'swap' }));
+  document.getElementById('ctrlResetBtn').addEventListener('click', () => send({ type: 'reset' }));
+</script>

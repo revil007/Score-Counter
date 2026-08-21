@@ -1,0 +1,1441 @@
+<title>Skor Lawan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1c1a17">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Skor Lawan">
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAL7klEQVR4nO3dy5El1RlG0dMdGCA7CHkhQzCAESPkgkaMZECHpjJBdmAHHqBRwqW7HvfeysfJ3GuNiaBG/Du/zCo+DTbz288//n70zwC3/v6f/777z/zjf//c4SeB+335/qdPR/8MV/Td0T/A2TnyANv64ddfXv3vrDh4ngB4gGMPMJeX4kAU3EcAvMHBBzifr6NAELxMANxw8AGuRxC8LB8Ajj5Ay20QlGMgGwAOPwBLDBRDIBUAjj4ALymuAokAcPgBuFdlFbh0ADj8ADzr6iFwyQBw+AFYy1VD4FIB4PADsJWrhcAlAsDhB2AvVwmBUweAww/AUc4eAp+P/gGe5fgDMIO3/mdFMzvdAuDwAzCbM64Bp1oAHH8AZnamNeAUC4DDD8BZnGUNmH4BcPwBOKPZ14CpA8DxB+DMZo6AKV8BOPwAXMWsrwSmWwAcfwCuaLY1YKoAcPwBuLKZImCaAHD8ASiYJQIO/wbA4QegZobvAg5dABx/AMqOXAMOCwDHHwCOi4BDAsDxB4A/HREBuweA4w8A39o7AnYNAMcfAF63ZwTsFgCOPwC8b68I2CUAHH8AuN8eEbB5ADj+APC4rSNgmr8ECADsZ9MA8PQPAM/bcgXYLAAcfwD4uK0iYJMAcPwBYD1bRMDqAeD4A8D61o4AHwECQNCqAeDpHwC2s+YKsFoAOP4AsL21ImCVAHD8AWA/a0SAbwAAIOjDAeDpHwD299EV4EMB4PgDwHE+EgFeAQBA0NMB4OkfAI737ArwVAA4/gAwj2ciwCsAAAh6OAA8/QPAfB5dASwAABD0UAB4+geAeT2yAlgAACDo7gDw9A8A87t3BbAAAEDQXQHg6R8AzuOeFcACAABB7waAp38AOJ/3VgALAAAEvRkAnv4B4LzeWgEsAAAQJAAAIOjVADD/A8D5vfYawAIAAEEvBoCnfwC4jpdWAAsAAAQJAAAI+iYAzP8AcD1fvwawAABAkAAAgCABAABBfwkA7/8B4LpuvwOwAABAkAAAgCABAABBfwSA9/8AcH3LdwAWAAAIEgAAECQAACBIAABA0OcxfAAIACU//PrL7xYAAAgSAAAQJAAAIEgAAECQAACAIAEAAEGf/QogAPRYAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQNDnv/3r35+O/iEAgH1ZAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAEfR5jDL8KCAAdX77/6ZMFAACCBAAABAkAAAgSAAAQ9EcA+BAQAK7vy/c/fRrDAgAASQIAAIIEAAAE/SUAfAcAANe1vP8fwwIAAEkCAACCBAAABH0TAL4DAIDruX3/P4YFAACSBAAABL0YAF4DAMB1fD3/j2EBAICkVwPACgAA5/fS0/8YFgAASBIAABD0ZgB4DQAA5/Xa/D+GBQAAkt4NACsAAJzPW0//Y1gAACDprgCwAgDAebz39D+GBQAAku4OACsAAMzvnqf/MSwAAJD0UABYAQBgXvc+/Y9hAQCApIcDwAoAAPN55Ol/DAsAACQ9FQBWAACYx6NP/2N8YAEQAQBwvGeO/xheAQBA0ocCwAoAAMd59ul/jBUWABEAAPv7yPEfwysAAEhaJQCsAACwn48+/Y+x4gIgAgBge2sc/zFWfgUgAgBgO2sd/zF8AwAASasHgBUAANa35tP/GBstACIAANaz9vEfY8NXACIAAD5ui+M/xsbfAIgAAHjeVsd/DB8BAkDS5gFgBQCAx2359D/GTguACACA+219/MfY8RWACACA9+1x/MfY+RsAEQAAr9vr+I9xwEeAIgAAvrXn8R/joN8CEAEA8Ke9j/8YB/4aoAgAgGOO/xgH/x0AEQBA2VHHf4wxvjvqX7xYIuC3n3/8/eifBQD2cOThX0zzlwCtAQAUzHD8x5goAMYQAQBc2yzHf4zJAmAMEQDANc10/MeY4BuAl/guAICrmO3wL6ZbAG5ZAwA4s1mP/xiTB8AYIgCAc5r5+I8x6SuAr3klAMBZzH74F9MvALesAQDM7CzHf4yTLAC3rAEAzOZMh39xqgXgljUAgBmc8fiPccIF4JY1AICjnPXwL04dAAshAMBezn74F5cIgIUQAGArVzn8i0sFwEIIALCWqx3+xSUDYCEEAHjWVQ//4tIBsBACANzr6od/kQiAxe2vDooBABaVo38rFQC3rAIAFA//IhsAC6sAQEv56N/KB8Ctr/+6oCAAOD8H/2UC4A2CAOB8HPz7CIAHvPT/HxAFAMdx7J/3f5SrBxF0WgeVAAAAAElFTkSuQmCC">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAL7klEQVR4nO3dy5El1RlG0dMdGCA7CHkhQzCAESPkgkaMZECHpjJBdmAHHqBRwqW7HvfeysfJ3GuNiaBG/Du/zCo+DTbz288//n70zwC3/v6f/777z/zjf//c4SeB+335/qdPR/8MV/Td0T/A2TnyANv64ddfXv3vrDh4ngB4gGMPMJeX4kAU3EcAvMHBBzifr6NAELxMANxw8AGuRxC8LB8Ajj5Ay20QlGMgGwAOPwBLDBRDIBUAjj4ALymuAokAcPgBuFdlFbh0ADj8ADzr6iFwyQBw+AFYy1VD4FIB4PADsJWrhcAlAsDhB2AvVwmBUweAww/AUc4eAp+P/gGe5fgDMIO3/mdFMzvdAuDwAzCbM64Bp1oAHH8AZnamNeAUC4DDD8BZnGUNmH4BcPwBOKPZ14CpA8DxB+DMZo6AKV8BOPwAXMWsrwSmWwAcfwCuaLY1YKoAcPwBuLKZImCaAHD8ASiYJQIO/wbA4QegZobvAg5dABx/AMqOXAMOCwDHHwCOi4BDAsDxB4A/HREBuweA4w8A39o7AnYNAMcfAF63ZwTsFgCOPwC8b68I2CUAHH8AuN8eEbB5ADj+APC4rSNgmr8ECADsZ9MA8PQPAM/bcgXYLAAcfwD4uK0iYJMAcPwBYD1bRMDqAeD4A8D61o4AHwECQNCqAeDpHwC2s+YKsFoAOP4AsL21ImCVAHD8AWA/a0SAbwAAIOjDAeDpHwD299EV4EMB4PgDwHE+EgFeAQBA0NMB4OkfAI737ArwVAA4/gAwj2ciwCsAAAh6OAA8/QPAfB5dASwAABD0UAB4+geAeT2yAlgAACDo7gDw9A8A87t3BbAAAEDQXQHg6R8AzuOeFcACAABB7waAp38AOJ/3VgALAAAEvRkAnv4B4LzeWgEsAAAQJAAAIOjVADD/A8D5vfYawAIAAEEvBoCnfwC4jpdWAAsAAAQJAAAI+iYAzP8AcD1fvwawAABAkAAAgCABAABBfwkA7/8B4LpuvwOwAABAkAAAgCABAABBfwSA9/8AcH3LdwAWAAAIEgAAECQAACBIAABA0OcxfAAIACU//PrL7xYAAAgSAAAQJAAAIEgAAECQAACAIAEAAEGf/QogAPRYAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQNDnv/3r35+O/iEAgH1ZAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAEfR5jDL8KCAAdX77/6ZMFAACCBAAABAkAAAgSAAAQ9EcA+BAQAK7vy/c/fRrDAgAASQIAAIIEAAAE/SUAfAcAANe1vP8fwwIAAEkCAACCBAAABH0TAL4DAIDruX3/P4YFAACSBAAABL0YAF4DAMB1fD3/j2EBAICkVwPACgAA5/fS0/8YFgAASBIAABD0ZgB4DQAA5/Xa/D+GBQAAkt4NACsAAJzPW0//Y1gAACDprgCwAgDAebz39D+GBQAAku4OACsAAMzvnqf/MSwAAJD0UABYAQBgXvc+/Y9hAQCApIcDwAoAAPN55Ol/DAsAACQ9FQBWAACYx6NP/2N8YAEQAQBwvGeO/xheAQBA0ocCwAoAAMd59ul/jBUWABEAAPv7yPEfwysAAEhaJQCsAACwn48+/Y+x4gIgAgBge2sc/zFWfgUgAgBgO2sd/zF8AwAASasHgBUAANa35tP/GBstACIAANaz9vEfY8NXACIAAD5ui+M/xsbfAIgAAHjeVsd/DB8BAkDS5gFgBQCAx2359D/GTguACACA+219/MfY8RWACACA9+1x/MfY+RsAEQAAr9vr+I9xwEeAIgAAvrXn8R/joN8CEAEA8Ke9j/8YB/4aoAgAgGOO/xgH/x0AEQBA2VHHf4wxvjvqX7xYIuC3n3/8/eifBQD2cOThX0zzlwCtAQAUzHD8x5goAMYQAQBc2yzHf4zJAmAMEQDANc10/MeY4BuAl/guAICrmO3wL6ZbAG5ZAwA4s1mP/xiTB8AYIgCAc5r5+I8x6SuAr3klAMBZzH74F9MvALesAQDM7CzHf4yTLAC3rAEAzOZMh39xqgXgljUAgBmc8fiPccIF4JY1AICjnPXwL04dAAshAMBezn74F5cIgIUQAGArVzn8i0sFwEIIALCWqx3+xSUDYCEEAHjWVQ//4tIBsBACANzr6od/kQiAxe2vDooBABaVo38rFQC3rAIAFA//IhsAC6sAQEv56N/KB8Ctr/+6oCAAOD8H/2UC4A2CAOB8HPz7CIAHvPT/HxAFAMdx7J/3f5SrBxF0WgeVAAAAAElFTkSuQmCC">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bungee&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script src="https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script src="https://unpkg.com/jsqr@1.4.0/dist/jsQR.js"></script>
+<style>
+  :root {
+    --bg: #f4f1ea;
+    --ink: #2a2622;
+    --ink-soft: #6b6258;
+    --line: #dcd4c6;
+    --surface: #ffffff;
+    --p1: #b3261e;
+    --p1-soft: #f6dcd9;
+    --p2: #1e7d42;
+    --p2-soft: #d7ecdd;
+    --danger: #a63d3d;
+    --shadow: rgba(42, 38, 34, 0.08);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1c1a17;
+      --ink: #f1ece2;
+      --ink-soft: #a89c8c;
+      --line: #3a352e;
+      --surface: #262320;
+      --p1: #f0776b;
+      --p1-soft: #3d211e;
+      --p2: #5fd68f;
+      --p2-soft: #1a3524;
+      --danger: #d97a7a;
+      --shadow: rgba(0, 0, 0, 0.35);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #1c1a17;
+    --ink: #f1ece2;
+    --ink-soft: #a89c8c;
+    --line: #3a352e;
+    --surface: #262320;
+    --p1: #f0776b;
+    --p1-soft: #3d211e;
+    --p2: #5fd68f;
+    --p2-soft: #1a3524;
+    --danger: #d97a7a;
+    --shadow: rgba(0, 0, 0, 0.35);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    height: 100%;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Manrope", "Segoe UI", system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ---------- Setup screen ---------- */
+
+  .setup {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    position: relative;
+  }
+
+  .settings-icon-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    font-size: 1.2rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 1px 3px var(--shadow);
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+
+  .settings-icon-btn:hover { transform: rotate(35deg); border-color: var(--ink-soft); }
+  .settings-icon-btn:focus-visible { outline: 2px solid var(--ink-soft); outline-offset: 2px; }
+
+  .settings-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: color-mix(in srgb, var(--bg) 70%, transparent);
+    backdrop-filter: blur(4px);
+    z-index: 60;
+  }
+
+  .settings-modal.visible { display: flex; }
+
+  .settings-card {
+    width: 100%;
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    padding: 1.6rem;
+    box-shadow: 0 1rem 2.5rem var(--shadow);
+    text-align: left;
+  }
+
+  .settings-card h2 {
+    margin: 0;
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+  }
+
+  .settings-done-btn { align-self: center; padding: 0.75rem 2.2rem; }
+
+  /* ---------- Offline QR link modal ---------- */
+
+  .offline-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: color-mix(in srgb, var(--bg) 70%, transparent);
+    backdrop-filter: blur(4px);
+    z-index: 70;
+  }
+
+  .offline-modal.visible { display: flex; }
+
+  .offline-card {
+    width: 100%;
+    max-width: 22rem;
+    max-height: 90vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 1rem 2.5rem var(--shadow);
+    text-align: center;
+  }
+
+  .offline-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .offline-header h2 { margin: 0; font-size: 1.1rem; }
+
+  .offline-instruction {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    text-align: left;
+  }
+
+  #offlineQrCanvas {
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+    align-self: center;
+    border-radius: 0.6rem;
+    border: 1px solid var(--line);
+  }
+
+  #offlineVideo {
+    width: 100%;
+    max-width: 260px;
+    align-self: center;
+    border-radius: 0.6rem;
+    border: 1px solid var(--line);
+    background: #000;
+  }
+
+  .offline-status {
+    margin: 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--ink-soft);
+  }
+
+  .setup h1 {
+    margin: 0;
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    letter-spacing: 0.01em;
+    text-wrap: balance;
+  }
+
+  .setup-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    text-align: left;
+  }
+
+  .field label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .field.team-a label { color: var(--p1); }
+  .field.team-b label { color: var(--p2); }
+
+  .field input,
+  .field select {
+    font-family: inherit;
+    font-size: 1.05rem;
+    font-weight: 600;
+    padding: 0.7rem 0.9rem;
+    border-radius: 0.6rem;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink);
+  }
+
+  .field input:focus-visible,
+  .field select:focus-visible {
+    outline: 2px solid var(--ink-soft);
+    outline-offset: 1px;
+  }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+  }
+
+  .start-btn {
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--surface);
+    background: var(--ink);
+    border: none;
+    border-radius: 999px;
+    padding: 0.9rem 2.6rem;
+    cursor: pointer;
+    box-shadow: 0 2px 10px var(--shadow);
+    transition: transform 0.1s ease;
+  }
+
+  .start-btn:hover { transform: translateY(-1px); }
+  .start-btn:active { transform: translateY(0); }
+  .start-btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+  .danger-link {
+    font-family: inherit;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    background: transparent;
+    border: none;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+    padding: 0.3rem;
+  }
+
+  .danger-link:hover { color: var(--danger); }
+  .danger-link:focus-visible { outline: 2px solid var(--danger); outline-offset: 2px; }
+
+  .setup-utility {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.4rem;
+  }
+
+  /* ---------- Counter screen ---------- */
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.4rem 0.9rem;
+    border-bottom: 1px solid var(--line);
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .brand {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .brand .match-label {
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+
+  .link-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .link-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--danger);
+    flex-shrink: 0;
+  }
+
+  .link-badge.connected .link-dot { background: var(--p2); }
+  .link-badge.connected #linkStatus { color: var(--p2); }
+
+  .header-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .ghost-btn {
+    font-family: inherit;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--ink-soft);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.5rem 1.1rem;
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+
+  #resetBtn:hover { border-color: var(--danger); color: var(--danger); }
+  #resetBtn:focus-visible { outline: 2px solid var(--danger); outline-offset: 2px; }
+  #newGameBtn:hover { border-color: var(--ink-soft); color: var(--ink); }
+  #newGameBtn:focus-visible { outline: 2px solid var(--ink-soft); outline-offset: 2px; }
+
+  main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+  }
+
+  @media (max-width: 640px) {
+    main { grid-template-columns: 1fr; grid-template-rows: 1fr 1px 1fr; }
+    .divider { width: 100%; height: 1px !important; }
+  }
+
+  .divider { background: var(--line); }
+
+  .side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.12s ease;
+  }
+
+  .side:active { background-color: var(--tint); }
+
+  .side.p1 { --accent: var(--p1); --tint: var(--p1-soft); }
+  .side.p2 { --accent: var(--p2); --tint: var(--p2-soft); }
+
+  .name {
+    position: absolute;
+    top: 0.9rem;
+    left: 1rem;
+    right: 1rem;
+    font-size: clamp(1.4rem, 4.5vmin, 2.6rem);
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .score {
+    font-family: "Bebas Neue", "Arial Narrow", sans-serif;
+    font-weight: 400;
+    font-size: 600px;
+    line-height: 0.8;
+    letter-spacing: 0.01em;
+    font-variant-numeric: tabular-nums;
+    color: var(--accent);
+    transition: transform 0.1s ease;
+  }
+
+  .side:active .score { transform: scale(0.97); }
+
+  .minus {
+    font-family: inherit;
+    font-size: 1.2rem;
+    font-weight: 700;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink-soft);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px var(--shadow);
+    transition: border-color 0.15s ease, color 0.15s ease;
+    position: absolute;
+    bottom: 0.7rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .minus:hover { border-color: var(--accent); color: var(--accent); }
+  .minus:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .score, .side, .start-btn { transition: none; }
+  }
+
+  /* ---------- Win overlay ---------- */
+
+  .win-overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    background:
+      radial-gradient(60vmax 60vmax at 50% 38%, color-mix(in srgb, var(--win-accent, var(--ink)) 20%, transparent), transparent 70%),
+      var(--bg);
+    z-index: 50;
+    padding: 1.5rem;
+    overflow: hidden;
+    animation: win-fade-in 0.35s ease;
+  }
+
+  .win-overlay.visible { display: flex; }
+
+  @keyframes win-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .win-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .win-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .win-ghost {
+    background: var(--surface);
+    font-size: 0.7rem;
+    padding: 0.4rem 0.85rem;
+  }
+
+  .win-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .win-trophy {
+    font-size: clamp(5.5rem, 17vmin, 10rem);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+    filter: drop-shadow(0 0 2.5rem color-mix(in srgb, var(--win-accent, var(--ink)) 65%, transparent));
+    animation: win-trophy-pop 0.6s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+  }
+
+  @keyframes win-trophy-pop {
+    0% { transform: scale(0.2) rotate(-12deg); opacity: 0; }
+    60% { transform: scale(1.15) rotate(4deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  .win-name {
+    font-family: "Bungee", "Arial Narrow", sans-serif;
+    font-weight: 400;
+    font-size: clamp(4.2rem, 15.5vmin, 9.5rem);
+    line-height: 1.05;
+    letter-spacing: 0.01em;
+    color: var(--win-accent, var(--ink));
+    text-wrap: balance;
+    text-shadow:
+      0 0.08em 0 color-mix(in srgb, var(--win-accent, var(--ink)) 35%, black 25%),
+      0 0 3rem color-mix(in srgb, var(--win-accent, var(--ink)) 55%, transparent);
+    animation: win-name-rise 0.55s 0.1s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+  }
+
+  @keyframes win-name-rise {
+    from { transform: translateY(0.6em); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .win-label {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    font-size: clamp(1.1rem, 3vmin, 1.7rem);
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 2.2rem;
+  }
+
+  .win-label::before,
+  .win-label::after {
+    content: "";
+    width: clamp(1.5rem, 5vmin, 3.5rem);
+    height: 1px;
+    background: var(--line);
+  }
+
+  .win-score {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 0.9rem;
+    color: var(--ink-soft);
+    font-size: clamp(1.1rem, 3vmin, 1.6rem);
+    font-weight: 600;
+    margin-top: 0.4rem;
+    padding: 0.6rem 1.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--surface) 80%, transparent);
+    box-shadow: 0 0.5rem 1.5rem var(--shadow);
+    min-width: min(90vw, 28rem);
+  }
+
+  .win-score #winScoreTeam1 {
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .win-score #winScoreTeam2 {
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .win-score #winScoreNum {
+    font-family: "Bebas Neue", "Arial Narrow", sans-serif;
+    font-weight: 400;
+    font-size: clamp(3rem, 9vmin, 5.5rem);
+    line-height: 1;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .win-trophy, .win-name { animation: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .win-overlay { animation: none; }
+  }
+</style>
+
+<div class="setup" id="setupScreen">
+  <h1 id="setupTitle">Sedia untuk perlawanan?</h1>
+  <div class="setup-fields">
+    <div class="field team-a">
+      <label for="team1Input">Nama Pasukan 1</label>
+      <input id="team1Input" type="text" placeholder="Pasukan 1" maxlength="24" autocomplete="off">
+    </div>
+    <div class="field team-b">
+      <label for="team2Input">Nama Pasukan 2</label>
+      <input id="team2Input" type="text" placeholder="Pasukan 2" maxlength="24" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="groupInput">Kumpulan</label>
+      <select id="groupInput">
+        <option value="">Tiada</option>
+        <option value="Group A">Group A</option>
+        <option value="Group B">Group B</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="matchInput">Perlawanan Ke-</label>
+      <input id="matchInput" type="number" placeholder="1" min="1" inputmode="numeric">
+    </div>
+  </div>
+  <button class="start-btn" id="startBtn" type="button">Start</button>
+  <div class="setup-utility">
+    <button class="ghost-btn" id="downloadBtn" type="button">Muat Turun Sejarah</button>
+    <button class="danger-link" id="resetDataBtn" type="button">Padam Sejarah Data</button>
+  </div>
+
+  <button class="settings-icon-btn" id="settingsBtn" type="button" aria-label="Tetapan Match Point" aria-haspopup="dialog">⚙️</button>
+
+  <div class="settings-modal" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <div class="settings-card">
+      <h2 id="settingsTitle">Match Point</h2>
+      <div class="field">
+        <label for="eventNameInput">Nama Perlawanan (opsyenal)</label>
+        <input id="eventNameInput" type="text" placeholder="Contoh: Volleyball" maxlength="24" autocomplete="off" style="text-transform: capitalize;">
+      </div>
+      <div class="field">
+        <label for="targetInput">Skor Menang (opsyenal)</label>
+        <input id="targetInput" type="number" placeholder="Tiada had" min="1" inputmode="numeric">
+      </div>
+      <button class="start-btn settings-done-btn" id="settingsDoneBtn" type="button">Selesai</button>
+    </div>
+  </div>
+</div>
+
+<div id="counterScreen" style="display: none;">
+  <header>
+    <span class="brand">
+      <span class="match-label" id="matchLabel">Skor Lawan</span>
+      <span class="link-badge" id="linkBadge">
+        <span class="link-dot" id="linkDot"></span>
+        <span id="linkStatus">Kod: ----</span>
+      </span>
+    </span>
+    <div class="header-actions">
+      <button class="ghost-btn" id="offlineLinkBtn" type="button">Sambung Offline (QR)</button>
+      <button class="ghost-btn" id="swapBtn" type="button">Tukar Tempat</button>
+      <button class="ghost-btn" id="fullscreenBtn" type="button">Skrin Penuh</button>
+      <button class="ghost-btn" id="resetBtn" type="button">Reset</button>
+      <button class="ghost-btn" id="newGameBtn" type="button">Perlawanan Baru</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="side p1" id="side1" role="button" tabindex="0" aria-label="Tambah skor Pasukan 1">
+      <span class="name" id="name1">Pasukan 1</span>
+      <span class="score" id="score1">0</span>
+      <button class="minus" id="minus1" type="button" aria-label="Tolak skor Pasukan 1">&minus;</button>
+    </div>
+    <div class="divider"></div>
+    <div class="side p2" id="side2" role="button" tabindex="0" aria-label="Tambah skor Pasukan 2">
+      <span class="name" id="name2">Pasukan 2</span>
+      <span class="score" id="score2">0</span>
+      <button class="minus" id="minus2" type="button" aria-label="Tolak skor Pasukan 2">&minus;</button>
+    </div>
+  </main>
+
+  <div class="offline-modal" id="offlineModal" role="dialog" aria-modal="true">
+    <div class="offline-card">
+      <div class="offline-header">
+        <h2>Sambung Offline</h2>
+        <button class="ghost-btn" id="offlineCloseBtn" type="button">Tutup</button>
+      </div>
+
+      <div class="offline-step" id="offlineStepQR">
+        <p class="offline-instruction">1. Buka <strong>Controller</strong> di phone → "Scan QR (Offline)".<br>2. Scan QR ni:</p>
+        <canvas id="offlineQrCanvas"></canvas>
+        <p class="offline-status" id="offlineStatus1">Menjana QR...</p>
+        <button class="start-btn" id="offlineScanAnswerBtn" type="button">Seterusnya: Scan Jawapan Phone</button>
+      </div>
+
+      <div class="offline-step" id="offlineStepScan" style="display: none;">
+        <p class="offline-instruction">Scan QR yang keluar di phone (jawapan sambungan):</p>
+        <video id="offlineVideo" playsinline muted></video>
+        <p class="offline-status" id="offlineStatus2">Membuka kamera...</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="win-overlay" id="winOverlay" role="alertdialog" aria-live="assertive">
+    <canvas class="win-canvas" id="winCanvas"></canvas>
+    <div class="win-actions">
+      <button class="ghost-btn win-ghost" id="winContinueBtn" type="button">Sambung Perlawanan</button>
+      <button class="ghost-btn win-ghost" id="winNewGameBtn" type="button">Perlawanan Baru</button>
+    </div>
+    <div class="win-body">
+      <span class="win-trophy">🏆</span>
+      <span class="win-name" id="winName">Pasukan 1</span>
+      <span class="win-label">Final Score</span>
+      <span class="win-score">
+        <span id="winScoreTeam1">Team A</span> <span id="winScoreNum">5-4</span> <span id="winScoreTeam2">Team B</span>
+      </span>
+    </div>
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = 'skor-lawan-state';
+  const HISTORY_KEY = 'skor-lawan-history';
+
+  let s1 = 0, s2 = 0;
+  const el1 = document.getElementById('score1');
+  const el2 = document.getElementById('score2');
+  const setupScreen = document.getElementById('setupScreen');
+  const counterScreen = document.getElementById('counterScreen');
+
+  const nameEl1 = document.getElementById('name1');
+  const nameEl2 = document.getElementById('name2');
+  const matchLabelEl = document.getElementById('matchLabel');
+  const team1Input = document.getElementById('team1Input');
+  const team2Input = document.getElementById('team2Input');
+  const groupInput = document.getElementById('groupInput');
+  const matchInput = document.getElementById('matchInput');
+  const targetInput = document.getElementById('targetInput');
+  const eventNameInput = document.getElementById('eventNameInput');
+  const setupTitle = document.getElementById('setupTitle');
+  const EVENT_NAME_KEY = 'skor-lawan-event-name';
+  const DEFAULT_TITLE = 'Sedia untuk perlawanan?';
+
+  function capitalizeWords(str) {
+    return str.replace(/\S+/g, (word) => word.charAt(0).toUpperCase() + word.slice(1));
+  }
+
+  function updateSetupTitle() {
+    const name = capitalizeWords(eventNameInput.value.trim());
+    setupTitle.textContent = name ? name + ' Match' : DEFAULT_TITLE;
+    try { localStorage.setItem(EVENT_NAME_KEY, name); } catch (err) {}
+  }
+  const winOverlay = document.getElementById('winOverlay');
+  const winName = document.getElementById('winName');
+  const winScoreTeam1 = document.getElementById('winScoreTeam1');
+  const winScoreTeam2 = document.getElementById('winScoreTeam2');
+  const winScoreNum = document.getElementById('winScoreNum');
+  const winCanvas = document.getElementById('winCanvas');
+
+  let targetScore = 0;
+
+  // ---------- Firework animation ----------
+  const fx = (function initFireworks() {
+    const ctx = winCanvas.getContext('2d');
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let particles = [];
+    let rafId = null;
+    let burstTimer = null;
+    let dpr = 1;
+
+    const PALETTE = ['#f0776b', '#5fd68f', '#f2c14e', '#7fb8e0', '#e0985a', '#ffffff'];
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      winCanvas.width = winOverlay.clientWidth * dpr;
+      winCanvas.height = winOverlay.clientHeight * dpr;
+    }
+
+    function spawnBurst() {
+      const w = winOverlay.clientWidth;
+      const h = winOverlay.clientHeight;
+      const x = w * (0.2 + Math.random() * 0.6);
+      const y = h * (0.18 + Math.random() * 0.32);
+      const count = 46 + Math.floor(Math.random() * 20);
+      const hue = PALETTE[Math.floor(Math.random() * PALETTE.length)];
+      for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 2 * i) / count + Math.random() * 0.15;
+        const speed = 2.2 + Math.random() * 3.2;
+        particles.push({
+          x, y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 1,
+          decay: 0.008 + Math.random() * 0.012,
+          color: hue,
+          size: 1.6 + Math.random() * 1.8,
+        });
+      }
+    }
+
+    function tick() {
+      const w = winOverlay.clientWidth;
+      const h = winOverlay.clientHeight;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, w, h);
+
+      particles = particles.filter((p) => p.life > 0);
+      for (const p of particles) {
+        p.vy += 0.045; // gravity
+        p.vx *= 0.986;
+        p.vy *= 0.986;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life -= p.decay;
+
+        ctx.globalAlpha = Math.max(p.life, 0);
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+
+      rafId = requestAnimationFrame(tick);
+    }
+
+    function start() {
+      if (reduceMotion) return; // respect the viewer's motion preference
+      stop();
+      resize();
+      spawnBurst();
+      let bursts = 1;
+      burstTimer = setInterval(() => {
+        spawnBurst();
+        bursts++;
+        if (bursts >= 5) {
+          clearInterval(burstTimer);
+          burstTimer = null;
+        }
+      }, 550);
+      rafId = requestAnimationFrame(tick);
+    }
+
+    function stop() {
+      if (rafId) cancelAnimationFrame(rafId);
+      if (burstTimer) clearInterval(burstTimer);
+      rafId = null;
+      burstTimer = null;
+      particles = [];
+      ctx.clearRect(0, 0, winCanvas.width, winCanvas.height);
+    }
+
+    window.addEventListener('resize', () => { if (rafId) resize(); });
+
+    return { start, stop };
+  })();
+
+  function saveState() {
+    try {
+      const inGame = counterScreen.style.display !== 'none';
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        inGame,
+        name1: nameEl1.textContent,
+        name2: nameEl2.textContent,
+        matchLabel: matchLabelEl.textContent,
+        targetScore,
+        s1,
+        s2,
+      }));
+    } catch (err) {
+      /* storage unavailable — game still works, just won't resume next time */
+    }
+  }
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return null;
+      return JSON.parse(raw);
+    } catch (err) {
+      return null;
+    }
+  }
+
+  function render() {
+    el1.textContent = s1;
+    el2.textContent = s2;
+    saveState();
+    if (typeof broadcastState === 'function') broadcastState();
+  }
+
+  function showWin(name, accentVar) {
+    winName.textContent = name;
+    winScoreTeam1.textContent = '(' + nameEl1.textContent + ')';
+    winScoreTeam2.textContent = '(' + nameEl2.textContent + ')';
+    winScoreNum.textContent = s1 + '-' + s2;
+    winOverlay.style.setProperty('--win-accent', `var(${accentVar})`);
+    winOverlay.classList.add('visible');
+    fx.start();
+  }
+
+  function hideWin() {
+    winOverlay.classList.remove('visible');
+    fx.stop();
+  }
+
+  function checkTarget(newScore, name, accentVar) {
+    if (targetScore > 0 && newScore === targetScore) {
+      showWin(name, accentVar);
+    }
+  }
+
+  function loadHistory() {
+    try {
+      const raw = localStorage.getItem(HISTORY_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch (err) {
+      return [];
+    }
+  }
+
+  function logMatchToHistory() {
+    if (s1 === 0 && s2 === 0) return; // nothing played yet, skip
+    try {
+      const history = loadHistory();
+      history.push({
+        when: new Date().toLocaleString('ms-MY'),
+        match: matchLabelEl.textContent || 'Skor Lawan',
+        team1: nameEl1.textContent,
+        score1: s1,
+        team2: nameEl2.textContent,
+        score2: s2,
+      });
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+    } catch (err) {
+      /* storage unavailable — history just won't be kept */
+    }
+  }
+
+  function csvEscape(value) {
+    const str = String(value);
+    return /[",\n]/.test(str) ? '"' + str.replace(/"/g, '""') + '"' : str;
+  }
+
+  function downloadHistory() {
+    const history = loadHistory();
+    if (!history.length) {
+      alert('Belum ada sejarah perlawanan untuk dimuat turun lagi.');
+      return;
+    }
+    const header = ['Perlawanan', 'Tarikh & Masa', 'Pasukan 1', 'Skor 1', 'Pasukan 2', 'Skor 2'];
+    const rows = history.map((h) => [h.match, h.when, h.team1, h.score1, h.team2, h.score2]);
+    const csv = [header, ...rows].map((row) => row.map(csvEscape).join(',')).join('\r\n');
+    const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'skor-lawan-sejarah.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function swapSides() {
+    const tempName = nameEl1.textContent;
+    nameEl1.textContent = nameEl2.textContent;
+    nameEl2.textContent = tempName;
+
+    const tempScore = s1;
+    s1 = s2;
+    s2 = tempScore;
+
+    render();
+  }
+
+  const teamActions = {};
+
+  function bindSide(teamNum, sideEl, minusEl, get, set, nameEl, accentVar) {
+    function increment() {
+      const newScore = get() + 1;
+      set(newScore);
+      render();
+      checkTarget(newScore, nameEl.textContent, accentVar);
+    }
+    function decrement() {
+      set(Math.max(0, get() - 1));
+      render();
+    }
+    teamActions[teamNum] = { increment, decrement };
+
+    sideEl.addEventListener('click', (e) => {
+      if (e.target === minusEl) return;
+      increment();
+    });
+    sideEl.addEventListener('keydown', (e) => {
+      if ((e.key === 'Enter' || e.key === ' ') && e.target === sideEl) {
+        e.preventDefault();
+        increment();
+      }
+    });
+    minusEl.addEventListener('click', (e) => {
+      e.stopPropagation();
+      decrement();
+    });
+  }
+
+  bindSide(1, document.getElementById('side1'), document.getElementById('minus1'),
+    () => s1, (v) => s1 = v, nameEl1, '--p1');
+  bindSide(2, document.getElementById('side2'), document.getElementById('minus2'),
+    () => s2, (v) => s2 = v, nameEl2, '--p2');
+
+  document.getElementById('winContinueBtn').addEventListener('click', hideWin);
+  document.getElementById('winNewGameBtn').addEventListener('click', () => {
+    hideWin();
+    document.getElementById('newGameBtn').click();
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    hideWin();
+    s1 = 0; s2 = 0; render();
+  });
+
+  document.getElementById('startBtn').addEventListener('click', () => startGame());
+  const settingsBtn = document.getElementById('settingsBtn');
+  const settingsModal = document.getElementById('settingsModal');
+  const settingsDoneBtn = document.getElementById('settingsDoneBtn');
+
+  settingsBtn.addEventListener('click', () => {
+    settingsModal.classList.add('visible');
+    eventNameInput.focus();
+  });
+
+  function closeSettings() {
+    settingsModal.classList.remove('visible');
+  }
+
+  eventNameInput.addEventListener('input', updateSetupTitle);
+
+  // Restore a previously-set event name (e.g. "Volleyball") on load.
+  (function restoreEventName() {
+    try {
+      const saved = localStorage.getItem(EVENT_NAME_KEY);
+      if (saved) eventNameInput.value = saved;
+    } catch (err) {}
+    updateSetupTitle();
+  })();
+
+  settingsDoneBtn.addEventListener('click', closeSettings);
+  settingsModal.addEventListener('click', (e) => {
+    if (e.target === settingsModal) closeSettings();
+  });
+  targetInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') closeSettings();
+  });
+
+  [team1Input, team2Input, groupInput, matchInput].forEach((input) => {
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') startGame();
+    });
+  });
+
+  function showCounterScreen() {
+    setupScreen.style.display = 'none';
+    counterScreen.style.display = 'flex';
+    counterScreen.style.flexDirection = 'column';
+    counterScreen.style.flex = '1';
+  }
+
+  function startGame() {
+    const team1 = team1Input.value.trim() || 'Pasukan 1';
+    const team2 = team2Input.value.trim() || 'Pasukan 2';
+    const group = groupInput.value;
+    const matchNo = matchInput.value.trim();
+    const target = parseInt(targetInput.value, 10);
+
+    nameEl1.textContent = team1;
+    nameEl2.textContent = team2;
+
+    const parts = [];
+    if (group) parts.push(group);
+    if (matchNo) parts.push('Perlawanan Ke-' + matchNo);
+    matchLabelEl.textContent = parts.length ? parts.join(' • ') : 'Skor Lawan';
+
+    targetScore = Number.isFinite(target) && target > 0 ? target : 0;
+
+    s1 = 0; s2 = 0;
+    hideWin();
+    showCounterScreen();
+    render();
+  }
+
+  document.getElementById('newGameBtn').addEventListener('click', () => {
+    hideWin();
+    logMatchToHistory();
+    counterScreen.style.display = 'none';
+    setupScreen.style.display = 'flex';
+    try { localStorage.removeItem(STORAGE_KEY); } catch (err) {}
+  });
+
+  document.getElementById('downloadBtn').addEventListener('click', downloadHistory);
+
+  document.getElementById('resetDataBtn').addEventListener('click', () => {
+    const history = loadHistory();
+    if (!history.length) {
+      alert('Tiada sejarah perlawanan untuk dipadam.');
+      return;
+    }
+    const confirmed = confirm(
+      'Padam ' + history.length + ' rekod sejarah perlawanan?\n\n' +
+      'Tindakan ini TIDAK boleh dibatalkan. Kalau belum muat turun, sila tekan "Muat Turun Sejarah" dulu sebelum padam.'
+    );
+    if (!confirmed) return;
+    try { localStorage.removeItem(HISTORY_KEY); } catch (err) {}
+    alert('Sejarah perlawanan dah dipadam.');
+  });
+
+  document.getElementById('swapBtn').addEventListener('click', swapSides);
+
+  document.getElementById('fullscreenBtn').addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen().catch(() => {});
+    }
+  });
+
+  // Resume a game that was still in progress when the page was last closed.
+  (function resume() {
+    const saved = loadState();
+    if (saved && saved.inGame) {
+      nameEl1.textContent = saved.name1 || 'Pasukan 1';
+      nameEl2.textContent = saved.name2 || 'Pasukan 2';
+      matchLabelEl.textContent = saved.matchLabel || 'Skor Lawan';
+      targetScore = Number(saved.targetScore) || 0;
+      s1 = Number(saved.s1) || 0;
+      s2 = Number(saved.s2) || 0;
+      showCounterScreen();
+      el1.textContent = s1;
+      el2.textContent = s2;
+    }
+  })();
+
+  // ---------- Controller link (PeerJS) ----------
+  const linkBadge = document.getElementById('linkBadge');
+  const linkStatus = document.getElementById('linkStatus');
+  let peer = null;
+  let controllerConns = [];
+
+  function currentStatePayload() {
+    return {
+      type: 'state',
+      name1: nameEl1.textContent,
+      name2: nameEl2.textContent,
+      matchLabel: matchLabelEl.textContent,
+      s1, s2,
+    };
+  }
+
+  function broadcastState() {
+    if (!controllerConns.length) return;
+    const payload = currentStatePayload();
+    controllerConns.forEach((conn) => {
+      try { conn.open && conn.send(payload); } catch (err) {}
+    });
+  }
+
+  function updateLinkUI() {
+    if (controllerConns.length) {
+      linkBadge.classList.add('connected');
+      linkStatus.textContent = controllerConns.length > 1
+        ? controllerConns.length + ' Controller Disambung'
+        : 'Controller Disambung';
+    } else if (peer && peer.id) {
+      linkBadge.classList.remove('connected');
+      linkStatus.textContent = 'Kod: ' + roomCodeFromPeerId(peer.id);
+    } else {
+      linkBadge.classList.remove('connected');
+      linkStatus.textContent = 'Menyambung...';
+    }
+  }
+
+  function roomCodeFromPeerId(id) {
+    return id.replace('skorlawan-', '');
+  }
+
+  function handleControllerMessage(msg) {
+    if (!msg || !msg.type) return;
+    switch (msg.type) {
+      case 'increment':
+        if (teamActions[msg.team]) teamActions[msg.team].increment();
+        break;
+      case 'decrement':
+        if (teamActions[msg.team]) teamActions[msg.team].decrement();
+        break;
+      case 'reset':
+        document.getElementById('resetBtn').click();
+        break;
+      case 'swap':
+        document.getElementById('swapBtn').click();
+        break;
+    }
+  }
+
+  function initPeerHost(attempt) {
+    attempt = attempt || 0;
+    if (attempt > 5) {
+      linkStatus.textContent = 'Gagal sambung rangkaian';
+      return;
+    }
+    if (typeof Peer === 'undefined') {
+      linkStatus.textContent = 'Perlu Internet untuk sambung';
+      return;
+    }
+    const code = String(1000 + Math.floor(Math.random() * 9000));
+    const p = new Peer('skorlawan-' + code);
+
+    p.on('open', () => {
+      peer = p;
+      updateLinkUI();
+    });
+
+    p.on('connection', (conn) => {
+      controllerConns.push(conn);
+      conn.on('open', () => {
+        updateLinkUI();
+        try { conn.send(currentStatePayload()); } catch (err) {}
+      });
+      conn.on('data', handleControllerMessage);
+      conn.on('close', () => {
+        controllerConns = controllerConns.filter((c) => c !== conn);
+        updateLinkUI();
+      });
+    });
+
+    p.on('error', (err) => {
+      if (err && err.type === 'unavailable-id') {
+        p.destroy();
+        initPeerHost(attempt + 1);
+      } else {
+        linkStatus.textContent = 'Ralat sambungan';
+      }
+    });
+  }
+
+  initPeerHost();
+  updateLinkUI();
+
+  // ---------- Offline link (raw WebRTC + QR, no internet needed after page load) ----------
+  const offlineModal = document.getElementById('offlineModal');
+  const offlineStepQR = document.getElementById('offlineStepQR');
+  const offlineStepScan = document.getElementById('offlineStepScan');
+  const offlineQrCanvas = document.getElementById('offlineQrCanvas');
+  const offlineStatus1 = document.getElementById('offlineStatus1');
+  const offlineStatus2 = document.getElementById('offlineStatus2');
+  const offlineVideo = document.getElementById('offlineVideo');
+  const offlineScanAnswerBtn = document.getElementById('offlineScanAnswerBtn');
+
+  let offlinePc = null;
+  let offlineStream = null;
+  let offlineScanning = false;
+
+  function waitIceGatheringComplete(pc) {
+    return new Promise((resolve) => {
+      if (pc.iceGatheringState === 'complete') { resolve(); return; }
+      function check() {
+        if (pc.iceGatheringState === 'complete') {
+          pc.removeEventListener('icegatheringstatechange', check);
+          resolve();
+        }
+      }
+      pc.addEventListener('icegatheringstatechange', check);
+      setTimeout(resolve, 4000); // safety timeout
+    });
+  }
+
+  function wrapDataChannel(dc) {
+    return {
+      get open() { return dc.readyState === 'open'; },
+      send: (obj) => dc.send(JSON.stringify(obj)),
+      _dc: dc,
+    };
+  }
+
+  function stopOfflineCamera() {
+    offlineScanning = false;
+    if (offlineStream) {
+      offlineStream.getTracks().forEach((t) => t.stop());
+      offlineStream = null;
+    }
+  }
+
+  function resetOfflineModal() {
+    stopOfflineCamera();
+    offlineStepQR.style.display = 'block';
+    offlineStepScan.style.display = 'none';
+    offlineScanAnswerBtn.disabled = false;
+    offlineStatus1.textContent = 'Menjana QR...';
+    offlineStatus2.textContent = 'Membuka kamera...';
+  }
+
+  async function openOfflineLink() {
+    offlineModal.classList.add('visible');
+    resetOfflineModal();
+
+    if (offlinePc) { try { offlinePc.close(); } catch (err) {} }
+    offlinePc = new RTCPeerConnection({ iceServers: [] });
+    const dc = offlinePc.createDataChannel('score');
+    dc.onopen = () => {
+      const wrapped = wrapDataChannel(dc);
+      controllerConns.push(wrapped);
+      updateLinkUI();
+      try { wrapped.send(currentStatePayload()); } catch (err) {}
+      offlineModal.classList.remove('visible');
+    };
+    dc.onmessage = (e) => {
+      try { handleControllerMessage(JSON.parse(e.data)); } catch (err) {}
+    };
+    dc.onclose = () => {
+      controllerConns = controllerConns.filter((c) => c._dc !== dc);
+      updateLinkUI();
+    };
+
+    try {
+      const offer = await offlinePc.createOffer();
+      await offlinePc.setLocalDescription(offer);
+      await waitIceGatheringComplete(offlinePc);
+      const payload = JSON.stringify({ t: 'offer', sdp: offlinePc.localDescription.sdp });
+      await QRCode.toCanvas(offlineQrCanvas, payload, { width: 260, margin: 1 });
+      offlineStatus1.textContent = 'Sedia untuk phone scan.';
+    } catch (err) {
+      offlineStatus1.textContent = 'Ralat menjana QR.';
+    }
+  }
+
+  async function startOfflineScanAnswer() {
+    offlineStepQR.style.display = 'none';
+    offlineStepScan.style.display = 'block';
+    offlineStatus2.textContent = 'Membuka kamera...';
+
+    try {
+      offlineStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+    } catch (err) {
+      offlineStatus2.textContent = 'Tak dapat akses kamera. Semak kebenaran kamera.';
+      return;
+    }
+
+    offlineVideo.srcObject = offlineStream;
+    await offlineVideo.play().catch(() => {});
+    offlineScanning = true;
+    offlineStatus2.textContent = 'Mencari QR...';
+
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    function scanLoop() {
+      if (!offlineScanning) return;
+      if (offlineVideo.readyState === offlineVideo.HAVE_ENOUGH_DATA) {
+        canvas.width = offlineVideo.videoWidth;
+        canvas.height = offlineVideo.videoHeight;
+        ctx.drawImage(offlineVideo, 0, 0, canvas.width, canvas.height);
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const code = jsQR(imageData.data, imageData.width, imageData.height);
+        if (code) {
+          handleScannedAnswer(code.data);
+          return;
+        }
+      }
+      requestAnimationFrame(scanLoop);
+    }
+    requestAnimationFrame(scanLoop);
+  }
+
+  async function handleScannedAnswer(text) {
+    let msg;
+    try { msg = JSON.parse(text); } catch (err) { return; }
+    if (!msg || msg.t !== 'answer' || !offlinePc) return;
+    stopOfflineCamera();
+    offlineStatus2.textContent = 'Menyambung...';
+    try {
+      await offlinePc.setRemoteDescription({ type: 'answer', sdp: msg.sdp });
+      // dc.onopen (set up in openOfflineLink) will close the modal once connected.
+    } catch (err) {
+      offlineStatus2.textContent = 'Ralat menyambung. Cuba lagi.';
+    }
+  }
+
+  document.getElementById('offlineLinkBtn').addEventListener('click', openOfflineLink);
+  offlineScanAnswerBtn.addEventListener('click', startOfflineScanAnswer);
+  document.getElementById('offlineCloseBtn').addEventListener('click', () => {
+    stopOfflineCamera();
+    offlineModal.classList.remove('visible');
+    if (offlinePc) { try { offlinePc.close(); } catch (err) {} offlinePc = null; }
+  });
+</script>

@@ -1,0 +1,102 @@
+<title>Skor Lawan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1c1a17">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f1ea;
+    --ink: #2a2622;
+    --ink-soft: #6b6258;
+    --line: #dcd4c6;
+    --surface: #ffffff;
+    --p1: #b3261e;
+    --p2: #1e7d42;
+    --shadow: rgba(42, 38, 34, 0.08);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1c1a17;
+      --ink: #f1ece2;
+      --ink-soft: #a89c8c;
+      --line: #3a352e;
+      --surface: #262320;
+      --p1: #f0776b;
+      --p2: #5fd68f;
+      --shadow: rgba(0, 0, 0, 0.35);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Manrope", "Segoe UI", system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    gap: 2rem;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  h1 {
+    font-family: "Bebas Neue", "Arial Narrow", sans-serif;
+    font-weight: 400;
+    font-size: clamp(2.5rem, 9vw, 4rem);
+    margin: 0;
+    letter-spacing: 0.02em;
+  }
+
+  p { color: var(--ink-soft); margin: 0; max-width: 26rem; }
+
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    width: 14rem;
+    padding: 1.6rem;
+    border-radius: 1rem;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    text-decoration: none;
+    color: var(--ink);
+    box-shadow: 0 0.5rem 1.5rem var(--shadow);
+  }
+
+  .card .emoji { font-size: 2.2rem; }
+  .card strong { font-size: 1.05rem; }
+  .card span { font-size: 0.8rem; color: var(--ink-soft); }
+  .card.p1 strong { color: var(--p1); }
+  .card.p2 strong { color: var(--p2); }
+</style>
+
+<h1>Skor Lawan</h1>
+<p>Pilih Monitor untuk skrin besar (tablet), atau Controller untuk kawal skor dari jauh (phone).</p>
+
+<div class="cards">
+  <a class="card p1" href="monitor.html">
+    <span class="emoji">📺</span>
+    <strong>Monitor</strong>
+    <span>Buka di tablet — papar skor besar</span>
+  </a>
+  <a class="card p2" href="controller.html">
+    <span class="emoji">🎮</span>
+    <strong>Controller</strong>
+    <span>Buka di phone — kawal skor</span>
+  </a>
+</div>
