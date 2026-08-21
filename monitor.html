@@ -957,6 +957,7 @@
         targetScore,
         s1,
         s2,
+        matchLoggedIndex,
       }));
     } catch (err) {
       /* storage unavailable — game still works, just won't resume next time */
@@ -988,11 +989,17 @@
     winOverlay.style.setProperty('--win-accent', `var(${accentVar})`);
     winOverlay.classList.add('visible');
     fx.start();
+    // Log it now as a safety net in case nobody presses "Perlawanan Baru" afterwards.
+    // If the match continues (deuce, "Sambung Perlawanan") and finishes with a
+    // different score, logMatchToHistory() will update this same entry, not duplicate it.
+    logMatchToHistory();
+    if (typeof broadcastState === 'function') broadcastState();
   }
 
   function hideWin() {
     winOverlay.classList.remove('visible');
     fx.stop();
+    if (typeof broadcastState === 'function') broadcastState();
   }
 
   function checkTarget(newScore, name, accentVar) {
@@ -1010,18 +1017,29 @@
     }
   }
 
+  // Tracks which entry in the history array belongs to the match currently being
+  // played, so logging again (e.g. hitting the target, then continuing on a deuce,
+  // then pressing "Perlawanan Baru") updates that one entry instead of duplicating it.
+  let matchLoggedIndex = null;
+
   function logMatchToHistory() {
     if (s1 === 0 && s2 === 0) return; // nothing played yet, skip
     try {
       const history = loadHistory();
-      history.push({
+      const entry = {
         when: new Date().toLocaleString('ms-MY'),
         match: matchLabelEl.textContent || 'Score Counter',
         team1: nameEl1.textContent,
         score1: s1,
         team2: nameEl2.textContent,
         score2: s2,
-      });
+      };
+      if (matchLoggedIndex !== null && history[matchLoggedIndex]) {
+        history[matchLoggedIndex] = entry;
+      } else {
+        history.push(entry);
+        matchLoggedIndex = history.length - 1;
+      }
       localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
     } catch (err) {
       /* storage unavailable — history just won't be kept */
@@ -1176,6 +1194,7 @@
     targetScore = Number.isFinite(target) && target > 0 ? target : 0;
 
     s1 = 0; s2 = 0;
+    matchLoggedIndex = null;
     hideWin();
     showCounterScreen();
     render();
@@ -1226,6 +1245,7 @@
       targetScore = Number(saved.targetScore) || 0;
       s1 = Number(saved.s1) || 0;
       s2 = Number(saved.s2) || 0;
+      matchLoggedIndex = (typeof saved.matchLoggedIndex === 'number') ? saved.matchLoggedIndex : null;
       showCounterScreen();
       el1.textContent = s1;
       el2.textContent = s2;
@@ -1280,6 +1300,7 @@
       matchNo: matchInput.value,
       target: targetScore || '',
       eventName: eventNameInput.value,
+      winning: winOverlay.classList.contains('visible'),
     };
   }
 

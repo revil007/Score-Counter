@@ -323,6 +323,22 @@
 
   .pad-minus:hover { border-color: var(--accent); color: var(--accent); }
 
+  main#controlMain.scoring-locked .pad { opacity: 0.4; pointer-events: none; }
+  main#controlMain.scoring-locked .pad-minus { pointer-events: none; }
+
+  .locked-banner {
+    display: none;
+    text-align: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding: 0.5rem;
+  }
+
+  main#controlMain.scoring-locked + .locked-banner { display: block; }
+
   .control-footer {
     display: flex;
     justify-content: center;
@@ -499,6 +515,7 @@
       <span class="pad-hint">Tap untuk +1</span>
     </div>
   </main>
+  <p class="locked-banner">Menunggu keputusan di Monitor…</p>
 
   <div class="control-footer">
     <button class="footer-btn" id="ctrlSetupBtn" type="button">Set Perlawanan</button>
@@ -582,6 +599,7 @@
   }
 
   let lastState = {};
+  let scoringLocked = false;
 
   function applyState(state) {
     lastState = state || {};
@@ -589,6 +607,11 @@
     padName2.textContent = state.name2 || 'Pasukan 2';
     padScore1.textContent = state.s1 ?? 0;
     padScore2.textContent = state.s2 ?? 0;
+
+    // While the monitor is showing the WINNER overlay, block scoring here too —
+    // otherwise a stray tap on the controller keeps changing the score underneath it.
+    scoringLocked = !!state.winning;
+    controlMain.classList.toggle('scoring-locked', scoringLocked);
   }
 
   function send(msg) {
@@ -826,16 +849,19 @@
   function bindPad(padEl, minusEl, team) {
     padEl.addEventListener('click', (e) => {
       if (e.target === minusEl) return;
+      if (scoringLocked) return;
       send({ type: 'increment', team });
     });
     padEl.addEventListener('keydown', (e) => {
       if ((e.key === 'Enter' || e.key === ' ') && e.target === padEl) {
         e.preventDefault();
+        if (scoringLocked) return;
         send({ type: 'increment', team });
       }
     });
     minusEl.addEventListener('click', (e) => {
       e.stopPropagation();
+      if (scoringLocked) return;
       send({ type: 'decrement', team });
     });
   }
