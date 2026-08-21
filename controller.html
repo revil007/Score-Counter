@@ -585,15 +585,12 @@
   }
 
   function showControlScreen() {
-    connectScreen.style.display = 'none';
-    controlScreen.style.display = 'flex';
-    controlScreen.style.flexDirection = 'column';
+    showScreen(controlScreen);
     controlScreen.style.flex = '1';
   }
 
   function showConnectScreen() {
-    controlScreen.style.display = 'none';
-    connectScreen.style.display = 'flex';
+    showScreen(connectScreen);
     codeInput.value = '';
     codeInput.focus();
   }
@@ -764,7 +761,7 @@
         send: (obj) => dc.send(JSON.stringify(obj)),
         close: () => dc.close(),
       };
-      dc.onopen = () => showControlScreen();
+      dc.onopen = () => showScreen(controlScreen);
       dc.onmessage = (ev) => {
         try {
           const m = JSON.parse(ev.data);

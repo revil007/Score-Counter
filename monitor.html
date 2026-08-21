@@ -804,28 +804,6 @@
     </div>
   </main>
 
-  <div class="offline-modal" id="offlineModal" role="dialog" aria-modal="true">
-    <div class="offline-card">
-      <div class="offline-header">
-        <h2>Sambung Offline</h2>
-        <button class="ghost-btn" id="offlineCloseBtn" type="button">Tutup</button>
-      </div>
-
-      <div class="offline-step" id="offlineStepQR">
-        <p class="offline-instruction">1. Buka <strong>Controller</strong> di phone → "Scan QR (Offline)".<br>2. Scan QR ni:</p>
-        <div id="offlineQrCanvas"></div>
-        <p class="offline-status" id="offlineStatus1">Menjana QR...</p>
-        <button class="start-btn" id="offlineScanAnswerBtn" type="button">Seterusnya: Scan Jawapan Phone</button>
-      </div>
-
-      <div class="offline-step" id="offlineStepScan" style="display: none;">
-        <p class="offline-instruction">Scan QR yang keluar di phone (jawapan sambungan):</p>
-        <video id="offlineVideo" playsinline muted></video>
-        <p class="offline-status" id="offlineStatus2">Membuka kamera...</p>
-      </div>
-    </div>
-  </div>
-
   <div class="win-overlay" id="winOverlay" role="alertdialog" aria-live="assertive">
     <canvas class="win-canvas" id="winCanvas"></canvas>
     <div class="win-actions">
@@ -839,6 +817,29 @@
       <span class="win-score">
         <span id="winScoreTeam1">Team A</span> <span id="winScoreNum">5-4</span> <span id="winScoreTeam2">Team B</span>
       </span>
+    </div>
+  </div>
+</div>
+
+<!-- Sits outside both setupScreen and counterScreen so it can be opened from either. -->
+<div class="offline-modal" id="offlineModal" role="dialog" aria-modal="true">
+  <div class="offline-card">
+    <div class="offline-header">
+      <h2>Sambung Offline</h2>
+      <button class="ghost-btn" id="offlineCloseBtn" type="button">Tutup</button>
+    </div>
+
+    <div class="offline-step" id="offlineStepQR">
+      <p class="offline-instruction">1. Buka <strong>Controller</strong> di phone → "Scan QR (Offline)".<br>2. Scan QR ni:</p>
+      <div id="offlineQrCanvas"></div>
+      <p class="offline-status" id="offlineStatus1">Menjana QR...</p>
+      <button class="start-btn" id="offlineScanAnswerBtn" type="button">Seterusnya: Scan Jawapan Phone</button>
+    </div>
+
+    <div class="offline-step" id="offlineStepScan" style="display: none;">
+      <p class="offline-instruction">Scan QR yang keluar di phone (jawapan sambungan):</p>
+      <video id="offlineVideo" playsinline muted></video>
+      <p class="offline-status" id="offlineStatus2">Membuka kamera...</p>
     </div>
   </div>
 </div>
