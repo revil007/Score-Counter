@@ -1,0 +1,19 @@
+{
+  "name": "Skor Lawan",
+  "short_name": "Skor Lawan",
+  "description": "Score counter perlawanan — pilih Monitor (papar skor besar) atau Controller (kawal dari jauh).",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#1c1a17",
+  "theme_color": "#1c1a17",
+  "icons": [
+    {
+      "src": "icon-app.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

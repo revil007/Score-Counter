@@ -1453,4 +1453,8 @@
     offlineModal.classList.remove('visible');
     if (offlinePc) { try { offlinePc.close(); } catch (err) {} offlinePc = null; }
   });
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
 </script>

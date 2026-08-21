@@ -650,4 +650,8 @@
 
   document.getElementById('ctrlSwapBtn').addEventListener('click', () => send({ type: 'swap' }));
   document.getElementById('ctrlResetBtn').addEventListener('click', () => send({ type: 'reset' }));
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
 </script>
