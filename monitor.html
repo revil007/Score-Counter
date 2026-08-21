@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bungee&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
-<script src="https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://unpkg.com/jsqr@1.4.0/dist/jsQR.js"></script>
 <style>
   :root {
@@ -196,12 +196,21 @@
   }
 
   #offlineQrCanvas {
-    width: 100%;
-    max-width: 260px;
-    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     align-self: center;
+    padding: 0.6rem;
     border-radius: 0.6rem;
     border: 1px solid var(--line);
+    background: #fff;
+  }
+
+  #offlineQrCanvas img,
+  #offlineQrCanvas canvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
   }
 
   #offlineVideo {
@@ -734,7 +743,7 @@
 
       <div class="offline-step" id="offlineStepQR">
         <p class="offline-instruction">1. Buka <strong>Controller</strong> di phone → "Scan QR (Offline)".<br>2. Scan QR ni:</p>
-        <canvas id="offlineQrCanvas"></canvas>
+        <div id="offlineQrCanvas"></div>
         <p class="offline-status" id="offlineStatus1">Menjana QR...</p>
         <button class="start-btn" id="offlineScanAnswerBtn" type="button">Seterusnya: Scan Jawapan Phone</button>
       </div>
@@ -1372,7 +1381,13 @@
       await offlinePc.setLocalDescription(offer);
       await waitIceGatheringComplete(offlinePc);
       const payload = JSON.stringify({ t: 'offer', sdp: offlinePc.localDescription.sdp });
-      await QRCode.toCanvas(offlineQrCanvas, payload, { width: 260, margin: 1 });
+      offlineQrCanvas.innerHTML = '';
+      new QRCode(offlineQrCanvas, {
+        text: payload,
+        width: 260,
+        height: 260,
+        correctLevel: QRCode.CorrectLevel.L,
+      });
       offlineStatus1.textContent = 'Sedia untuk phone scan.';
     } catch (err) {
       offlineStatus1.textContent = 'Ralat menjana QR.';

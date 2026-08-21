@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
-<script src="https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://unpkg.com/jsqr@1.4.0/dist/jsQR.js"></script>
 <style>
   :root {
@@ -168,11 +168,21 @@
   }
 
   #offlineAnswerCanvas {
-    width: 100%;
-    max-width: 260px;
-    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    padding: 0.6rem;
     border-radius: 0.6rem;
     border: 1px solid var(--line);
+    background: #fff;
+  }
+
+  #offlineAnswerCanvas img,
+  #offlineAnswerCanvas canvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
   }
 
   /* ---------- Control screen ---------- */
@@ -339,7 +349,7 @@
 <div class="connect" id="offlineAnswerScreen" style="display: none;">
   <h1>Tunjuk QR Ini di Monitor</h1>
   <p>Tunjuk skrin ni kat monitor (tablet) untuk di-scan balik. Sambungan akan bermula secara automatik lepas monitor scan.</p>
-  <canvas id="offlineAnswerCanvas"></canvas>
+  <div id="offlineAnswerCanvas"></div>
   <span class="connect-status" id="offlineAnswerStatus">Menunggu monitor scan...</span>
 </div>
 
@@ -576,7 +586,13 @@
       await waitIceGatheringComplete(offlinePc);
       showScreen(offlineAnswerScreen);
       const payload = JSON.stringify({ t: 'answer', sdp: offlinePc.localDescription.sdp });
-      await QRCode.toCanvas(offlineAnswerCanvas, payload, { width: 260, margin: 1 });
+      offlineAnswerCanvas.innerHTML = '';
+      new QRCode(offlineAnswerCanvas, {
+        text: payload,
+        width: 260,
+        height: 260,
+        correctLevel: QRCode.CorrectLevel.L,
+      });
       offlineAnswerStatus.textContent = 'Menunggu monitor scan...';
     } catch (err) {
       offlineScanStatus.textContent = 'Ralat sambungan. Cuba lagi.';
