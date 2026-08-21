@@ -1,4 +1,4 @@
-<title>Skor Lawan — Controller</title>
+<title>Score Counter — Controller</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#1c1a17">
 <meta name="mobile-web-app-capable" content="yes">
@@ -326,6 +326,106 @@
   }
 
   .footer-btn:hover { border-color: var(--ink-soft); color: var(--ink); }
+
+  /* ---------- Set match modal ---------- */
+
+  .setup-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: color-mix(in srgb, var(--bg) 70%, transparent);
+    backdrop-filter: blur(4px);
+    z-index: 60;
+  }
+
+  .setup-modal.visible { display: flex; }
+
+  .setup-card {
+    width: 100%;
+    max-width: 22rem;
+    max-height: 90vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    padding: 1.6rem;
+    box-shadow: 0 1rem 2.5rem var(--shadow);
+    text-align: left;
+  }
+
+  .setup-card h2 { margin: 0; font-size: 1.1rem; letter-spacing: 0.02em; }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    text-align: left;
+  }
+
+  .field label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .field.team-a label { color: var(--p1); }
+  .field.team-b label { color: var(--p2); }
+
+  .field input,
+  .field select {
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.65rem 0.85rem;
+    border-radius: 0.6rem;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--ink);
+  }
+
+  .field input:focus-visible,
+  .field select:focus-visible {
+    outline: 2px solid var(--ink-soft);
+    outline-offset: 1px;
+  }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+  }
+
+  .setup-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .setup-send-btn {
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--surface);
+    background: var(--ink);
+    border: none;
+    border-radius: 999px;
+    padding: 0.85rem 1.5rem;
+    cursor: pointer;
+    align-self: center;
+    box-shadow: 0 2px 10px var(--shadow);
+  }
+
+  .setup-send-btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 </style>
 
 <div class="connect" id="connectScreen">
@@ -377,8 +477,49 @@
   </main>
 
   <div class="control-footer">
+    <button class="footer-btn" id="ctrlSetupBtn" type="button">Set Perlawanan</button>
     <button class="footer-btn" id="ctrlSwapBtn" type="button">Tukar Tempat</button>
     <button class="footer-btn" id="ctrlResetBtn" type="button">Reset</button>
+  </div>
+</div>
+
+<div class="setup-modal" id="setupModal" role="dialog" aria-modal="true" aria-labelledby="setupModalTitle">
+  <div class="setup-card">
+    <h2 id="setupModalTitle">Set Perlawanan</h2>
+    <div class="setup-fields">
+      <div class="field team-a">
+        <label for="ctrlTeam1Input">Nama Pasukan 1</label>
+        <input id="ctrlTeam1Input" type="text" placeholder="Pasukan 1" maxlength="24" autocomplete="off">
+      </div>
+      <div class="field team-b">
+        <label for="ctrlTeam2Input">Nama Pasukan 2</label>
+        <input id="ctrlTeam2Input" type="text" placeholder="Pasukan 2" maxlength="24" autocomplete="off">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="ctrlGroupInput">Kumpulan</label>
+          <select id="ctrlGroupInput">
+            <option value="">Tiada</option>
+            <option value="Group A">Group A</option>
+            <option value="Group B">Group B</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="ctrlMatchInput">Perlawanan Ke-</label>
+          <input id="ctrlMatchInput" type="number" placeholder="1" min="1" inputmode="numeric">
+        </div>
+      </div>
+      <div class="field">
+        <label for="ctrlEventNameInput">Nama Perlawanan (opsyenal)</label>
+        <input id="ctrlEventNameInput" type="text" placeholder="Contoh: Volleyball" maxlength="24" autocomplete="off" style="text-transform: capitalize;">
+      </div>
+      <div class="field">
+        <label for="ctrlTargetInput">Skor Menang (opsyenal)</label>
+        <input id="ctrlTargetInput" type="number" placeholder="Tiada had" min="1" inputmode="numeric">
+      </div>
+    </div>
+    <button class="setup-send-btn" id="setupSendBtn" type="button">Hantar ke Monitor</button>
+    <button class="footer-btn" id="setupCancelBtn" type="button" style="align-self: center;">Batal</button>
   </div>
 </div>
 
@@ -416,7 +557,10 @@
     codeInput.focus();
   }
 
+  let lastState = {};
+
   function applyState(state) {
+    lastState = state || {};
     padName1.textContent = state.name1 || 'Pasukan 1';
     padName2.textContent = state.name2 || 'Pasukan 2';
     padScore1.textContent = state.s1 ?? 0;
@@ -650,6 +794,50 @@
 
   document.getElementById('ctrlSwapBtn').addEventListener('click', () => send({ type: 'swap' }));
   document.getElementById('ctrlResetBtn').addEventListener('click', () => send({ type: 'reset' }));
+
+  // ---------- Set match modal ----------
+  const setupModal = document.getElementById('setupModal');
+  const ctrlTeam1Input = document.getElementById('ctrlTeam1Input');
+  const ctrlTeam2Input = document.getElementById('ctrlTeam2Input');
+  const ctrlGroupInput = document.getElementById('ctrlGroupInput');
+  const ctrlMatchInput = document.getElementById('ctrlMatchInput');
+  const ctrlEventNameInput = document.getElementById('ctrlEventNameInput');
+  const ctrlTargetInput = document.getElementById('ctrlTargetInput');
+
+  function openSetupModal() {
+    // Prefill with whatever the monitor last broadcast, so it's easy to just tweak one field.
+    ctrlTeam1Input.value = lastState.name1 || '';
+    ctrlTeam2Input.value = lastState.name2 || '';
+    ctrlGroupInput.value = lastState.group || '';
+    ctrlMatchInput.value = lastState.matchNo || '';
+    ctrlEventNameInput.value = lastState.eventName || '';
+    ctrlTargetInput.value = lastState.target || '';
+    setupModal.classList.add('visible');
+    ctrlTeam1Input.focus();
+  }
+
+  function closeSetupModal() {
+    setupModal.classList.remove('visible');
+  }
+
+  document.getElementById('ctrlSetupBtn').addEventListener('click', openSetupModal);
+  document.getElementById('setupCancelBtn').addEventListener('click', closeSetupModal);
+  setupModal.addEventListener('click', (e) => {
+    if (e.target === setupModal) closeSetupModal();
+  });
+
+  document.getElementById('setupSendBtn').addEventListener('click', () => {
+    send({
+      type: 'setup',
+      team1: ctrlTeam1Input.value.trim(),
+      team2: ctrlTeam2Input.value.trim(),
+      group: ctrlGroupInput.value,
+      matchNo: ctrlMatchInput.value.trim(),
+      eventName: ctrlEventNameInput.value.trim(),
+      target: ctrlTargetInput.value.trim(),
+    });
+    closeSetupModal();
+  });
 
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(() => {});
