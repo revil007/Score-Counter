@@ -437,15 +437,21 @@
   main {
     flex: 1;
     display: grid;
-    grid-template-columns: 1fr 1px 1fr;
+    grid-template-columns: 1fr 0.5rem 1fr;
   }
 
   @media (max-width: 640px) {
-    main { grid-template-columns: 1fr; grid-template-rows: 1fr 1px 1fr; }
-    .divider { width: 100%; height: 1px !important; }
+    main { grid-template-columns: 1fr; grid-template-rows: 1fr 0.5rem 1fr; }
+    .divider { width: 100%; height: 0.5rem !important; background: linear-gradient(to bottom, var(--p1), var(--p2)); }
   }
 
-  .divider { background: var(--line); }
+  /* A wide, two-colour bar (not a thin line) so it reads clearly even on a big
+     tablet viewed from across the court — it visually "connects" each side's
+     colour straight through the middle. */
+  .divider {
+    background: linear-gradient(to right, var(--p1), var(--p2));
+    box-shadow: inset 0 0 0 1px var(--bg);
+  }
 
   .side {
     display: flex;
@@ -464,6 +470,33 @@
 
   .side.p1 { --accent: var(--p1); --tint: var(--p1-soft); }
   .side.p2 { --accent: var(--p2); --tint: var(--p2-soft); }
+
+  /* A thick accent-coloured stripe along the outer edge of each half, so which
+     colour belongs to which side is obvious even at a glance from a distance. */
+  .side::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 0.6rem;
+    background: var(--accent);
+  }
+
+  .side.p1::before { left: 0; }
+  .side.p2::before { right: 0; }
+
+  @media (max-width: 640px) {
+    .side::before {
+      top: auto;
+      bottom: auto;
+      left: 0;
+      right: 0;
+      width: auto;
+      height: 0.6rem;
+    }
+    .side.p1::before { top: 0; bottom: auto; }
+    .side.p2::before { bottom: 0; top: auto; }
+  }
 
   .name {
     position: absolute;
@@ -715,6 +748,7 @@
   </div>
   <button class="start-btn" id="startBtn" type="button">Start</button>
   <div class="setup-utility">
+    <button class="ghost-btn" id="offlineLinkBtnSetup" type="button">Sambung Offline (QR)</button>
     <button class="ghost-btn" id="downloadBtn" type="button">Muat Turun Sejarah</button>
     <button class="danger-link" id="resetDataBtn" type="button">Padam Sejarah Data</button>
   </div>
@@ -1580,6 +1614,7 @@
   }
 
   document.getElementById('offlineLinkBtn').addEventListener('click', openOfflineLink);
+  document.getElementById('offlineLinkBtnSetup').addEventListener('click', openOfflineLink);
   offlineScanAnswerBtn.addEventListener('click', startOfflineScanAnswer);
   document.getElementById('offlineCloseBtn').addEventListener('click', () => {
     stopOfflineCamera();
