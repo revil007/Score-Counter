@@ -704,6 +704,21 @@
 
   .history-header h2 { margin: 0; font-size: 1.15rem; }
   .history-actions { display: flex; gap: 0.45rem; flex-wrap: wrap; justify-content: flex-end; }
+  .history-filter { padding: 0 1.2rem 0.7rem; }
+  .history-filter input {
+    width: 100%;
+    padding: 0.55rem 0.8rem;
+    border-radius: 0.6rem;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    box-sizing: border-box;
+  }
+  .history-filter input::placeholder { color: var(--ink-soft); font-weight: 500; }
+  .history-filter input:focus { outline: 2px solid var(--ink-soft); outline-offset: 1px; }
   .history-body { overflow: auto; padding: 0.6rem; }
   .history-table { width: 100%; border-collapse: collapse; min-width: 620px; }
   .history-table th, .history-table td { padding: 0.72rem 0.65rem; border-bottom: 1px solid var(--line); text-align: left; }
@@ -964,8 +979,7 @@
   <button class="start-btn" id="startBtn" type="button">Start</button>
   <div class="setup-utility">
     <div class="setup-utility-row">
-      <button class="ghost-btn" id="historyBtnSetup" type="button">Lihat Sejarah</button>
-      <button class="ghost-btn" id="downloadBtn" type="button">Muat Turun Sejarah</button>
+      <button class="ghost-btn" id="historyBtnSetup" type="button">Sejarah Perlawanan</button>
     </div>
     <button class="danger-link" id="resetDataBtn" type="button">Padam Data</button>
   </div>
@@ -1117,6 +1131,9 @@
         <button class="ghost-btn" id="historyDownloadBtn" type="button">Muat Turun CSV</button>
         <button class="ghost-btn" id="historyCloseBtn" type="button">Tutup</button>
       </div>
+    </div>
+    <div class="history-filter">
+      <input type="text" id="historyFilterInput" placeholder="Tapis ikut nama pasukan...">
     </div>
     <p class="history-count" id="historyCount"></p>
     <div class="history-body" id="historyBody"></div>
@@ -1471,6 +1488,8 @@
   const historyModal = document.getElementById('historyModal');
   const historyBody = document.getElementById('historyBody');
   const historyCount = document.getElementById('historyCount');
+  const historyFilterInput = document.getElementById('historyFilterInput');
+  let allHistoryEntries = [];
 
   function escapeHtml(str) {
     return String(str).replace(/[&<>"']/g, (c) => ({
@@ -1478,22 +1497,45 @@
     }[c]));
   }
 
-  function openHistory() {
-    const history = loadHistory();
-    if (!history.length) {
+  function renderHistoryTable(list) {
+    if (!allHistoryEntries.length) {
       historyBody.innerHTML = '<p class="history-empty">Belum ada sejarah perlawanan.</p>';
       historyCount.textContent = '';
-    } else {
-      const rows = history.slice().reverse().map((h) => {
-        const winner = h.score1 === h.score2 ? '—' : (h.score1 > h.score2 ? h.team1 : h.team2);
-        return '<tr><td>' + escapeHtml(h.match) + '</td><td>' + escapeHtml(h.when) + '</td><td>' +
-          escapeHtml(h.team1) + '</td><td class="score-cell">' + h.score1 + ' — ' + h.score2 + '</td><td>' +
-          escapeHtml(h.team2) + '</td><td class="winner">' + escapeHtml(winner) + '</td></tr>';
-      }).join('');
-      historyBody.innerHTML = '<table class="history-table"><thead><tr><th>Perlawanan</th><th>Tarikh & Masa</th>' +
-        '<th>Pasukan 1</th><th>Skor</th><th>Pasukan 2</th><th>Pemenang</th></tr></thead><tbody>' + rows + '</tbody></table>';
-      historyCount.textContent = history.length + ' rekod perlawanan';
+      return;
     }
+    if (!list.length) {
+      historyBody.innerHTML = '<p class="history-empty">Tiada rekod sepadan dengan carian.</p>';
+      historyCount.textContent = '0 rekod perlawanan';
+      return;
+    }
+    const rows = list.map((h) => {
+      const winner = h.score1 === h.score2 ? '—' : (h.score1 > h.score2 ? h.team1 : h.team2);
+      return '<tr><td>' + escapeHtml(h.match) + '</td><td>' + escapeHtml(h.when) + '</td><td>' +
+        escapeHtml(h.team1) + '</td><td class="score-cell">' + h.score1 + ' — ' + h.score2 + '</td><td>' +
+        escapeHtml(h.team2) + '</td><td class="winner">' + escapeHtml(winner) + '</td></tr>';
+    }).join('');
+    historyBody.innerHTML = '<table class="history-table"><thead><tr><th>Perlawanan</th><th>Tarikh & Masa</th>' +
+      '<th>Pasukan 1</th><th>Skor</th><th>Pasukan 2</th><th>Pemenang</th></tr></thead><tbody>' + rows + '</tbody></table>';
+    historyCount.textContent = list.length + ' rekod perlawanan';
+  }
+
+  function applyHistoryFilter() {
+    const query = historyFilterInput.value.trim().toLowerCase();
+    if (!query) {
+      renderHistoryTable(allHistoryEntries);
+      return;
+    }
+    const filtered = allHistoryEntries.filter((h) =>
+      (h.team1 || '').toLowerCase().includes(query) ||
+      (h.team2 || '').toLowerCase().includes(query)
+    );
+    renderHistoryTable(filtered);
+  }
+
+  function openHistory() {
+    allHistoryEntries = loadHistory().slice().reverse();
+    historyFilterInput.value = '';
+    renderHistoryTable(allHistoryEntries);
     historyModal.classList.add('visible');
   }
 
@@ -1504,6 +1546,7 @@
   document.getElementById('historyBtnSetup').addEventListener('click', openHistory);
   document.getElementById('historyCloseBtn').addEventListener('click', closeHistory);
   document.getElementById('historyDownloadBtn').addEventListener('click', downloadHistory);
+  historyFilterInput.addEventListener('input', applyHistoryFilter);
   historyModal.addEventListener('click', (e) => {
     if (e.target === historyModal) closeHistory();
   });
@@ -1647,8 +1690,6 @@
     setupScreen.style.display = 'flex';
     try { localStorage.removeItem(STORAGE_KEY); } catch (err) {}
   });
-
-  document.getElementById('downloadBtn').addEventListener('click', downloadHistory);
 
   document.getElementById('resetDataBtn').addEventListener('click', () => {
     const history = loadHistory();
