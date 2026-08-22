@@ -111,6 +111,31 @@
   .settings-icon-btn:hover { transform: rotate(35deg); border-color: var(--ink-soft); }
   .settings-icon-btn:focus-visible { outline: 2px solid var(--ink-soft); outline-offset: 2px; }
 
+  .theme-toggle-btn {
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    font-size: 1.15rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 1px 3px var(--shadow);
+    transition: border-color 0.15s ease;
+  }
+
+  .theme-toggle-btn:hover { border-color: var(--ink-soft); }
+  .theme-toggle-btn:focus-visible { outline: 2px solid var(--ink-soft); outline-offset: 2px; }
+
+  .setup-theme-toggle-btn {
+    position: absolute;
+    top: 1rem;
+    right: 4.2rem;
+  }
+
   .settings-modal {
     position: fixed;
     inset: 0;
@@ -891,6 +916,7 @@
     <button class="danger-link" id="resetDataBtn" type="button">Padam Data</button>
   </div>
 
+  <button class="theme-toggle-btn setup-theme-toggle-btn" id="themeToggleBtnSetup" type="button" aria-label="Tukar Tema Gelap/Terang" aria-pressed="false">🌙</button>
   <button class="settings-icon-btn" id="settingsBtn" type="button" aria-label="Tetapan Match Point" aria-haspopup="dialog">⚙️</button>
 
   <div class="settings-modal" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
@@ -931,6 +957,7 @@
       </span>
     </span>
     <div class="header-actions">
+      <button class="theme-toggle-btn" id="themeToggleBtn" type="button" aria-label="Tukar Tema Gelap/Terang" aria-pressed="false">🌙</button>
       <button class="ghost-btn" id="lockScreenBtn" type="button" aria-pressed="false">🔓 Kunci Skrin</button>
       <button class="ghost-btn" id="swapBtn" type="button">Tukar Tempat</button>
       <button class="ghost-btn" id="fullscreenBtn" type="button">Skrin Penuh</button>
@@ -1073,6 +1100,61 @@
     let saved = '0';
     try { saved = localStorage.getItem(LOCK_KEY) || '0'; } catch (err) {}
     setInputLocked(saved === '1');
+  })();
+
+  // ---------- Dark mode toggle ----------
+  const THEME_KEY = 'skor-lawan-theme';
+  const themeToggleBtn = document.getElementById('themeToggleBtn');
+  const themeToggleBtnSetup = document.getElementById('themeToggleBtnSetup');
+  const systemDarkQuery = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+
+  function isDarkActive() {
+    const explicit = document.documentElement.getAttribute('data-theme');
+    if (explicit === 'dark') return true;
+    if (explicit === 'light') return false;
+    return !!(systemDarkQuery && systemDarkQuery.matches);
+  }
+
+  function updateThemeIcon() {
+    const dark = isDarkActive();
+    const icon = dark ? '☀️' : '🌙';
+    [themeToggleBtn, themeToggleBtnSetup].forEach((btn) => {
+      if (!btn) return;
+      btn.textContent = icon;
+      btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+    });
+  }
+
+  function applyTheme(theme) {
+    if (theme === 'dark' || theme === 'light') {
+      document.documentElement.setAttribute('data-theme', theme);
+      try { localStorage.setItem(THEME_KEY, theme); } catch (err) {}
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      try { localStorage.removeItem(THEME_KEY); } catch (err) {}
+    }
+    updateThemeIcon();
+  }
+
+  function toggleTheme() {
+    applyTheme(isDarkActive() ? 'light' : 'dark');
+  }
+
+  if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
+  if (themeToggleBtnSetup) themeToggleBtnSetup.addEventListener('click', toggleTheme);
+  if (systemDarkQuery && systemDarkQuery.addEventListener) {
+    systemDarkQuery.addEventListener('change', () => {
+      if (!document.documentElement.getAttribute('data-theme')) updateThemeIcon();
+    });
+  }
+
+  (function restoreTheme() {
+    let saved = '';
+    try { saved = localStorage.getItem(THEME_KEY) || ''; } catch (err) {}
+    if (saved === 'dark' || saved === 'light') {
+      document.documentElement.setAttribute('data-theme', saved);
+    }
+    updateThemeIcon();
   })();
 
   // ---------- Firework animation ----------
