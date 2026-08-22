@@ -66,8 +66,10 @@
     font-family: "Manrope", "Segoe UI", system-ui, sans-serif;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    height: 100vh; /* fallback for browsers without dvh support */
+    height: 100dvh; /* tracks the actual visible viewport as the address bar shows/hides */
     overflow-x: hidden;
+    overflow-y: auto;
   }
 
   /* ---------- Connect screen ---------- */
@@ -496,7 +498,7 @@
   <header>
     <span class="header-label"><span class="link-dot"></span>Disambung</span>
     <span style="display: flex; gap: 0.5rem;">
-      <button class="mirror-btn" id="mirrorBtn" type="button" aria-pressed="false">⇄ Cermin</button>
+      <button class="mirror-btn" id="mirrorBtn" type="button" aria-pressed="false">⇄ Mirror</button>
       <button class="disconnect-btn" id="disconnectBtn" type="button">Putus</button>
     </span>
   </header>

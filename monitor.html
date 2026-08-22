@@ -465,6 +465,39 @@
     flex: 1;
     display: grid;
     grid-template-columns: 1fr 4px 1fr;
+    position: relative;
+  }
+
+  /* Local taps disabled — score is being controlled from the phone (Controller). */
+  main.input-locked .side { cursor: not-allowed; pointer-events: none; }
+  main.input-locked .side:active { background-color: transparent; }
+  main.input-locked .minus { opacity: 0.4; }
+
+  .input-locked-banner {
+    display: none;
+    position: absolute;
+    left: 50%;
+    bottom: 0.8rem;
+    transform: translateX(-50%);
+    margin: 0;
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink-soft);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    box-shadow: 0 0.4rem 1.2rem var(--shadow);
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  main.input-locked .input-locked-banner { display: block; }
+
+  #lockScreenBtn.active {
+    border-color: var(--ink);
+    color: var(--ink);
   }
 
   @media (max-width: 640px) {
@@ -898,6 +931,7 @@
       </span>
     </span>
     <div class="header-actions">
+      <button class="ghost-btn" id="lockScreenBtn" type="button" aria-pressed="false">🔓 Kunci Skrin</button>
       <button class="ghost-btn" id="swapBtn" type="button">Tukar Tempat</button>
       <button class="ghost-btn" id="fullscreenBtn" type="button">Skrin Penuh</button>
       <button class="ghost-btn" id="resetBtn" type="button">Reset</button>
@@ -905,7 +939,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="counterMain">
     <div class="side p1" id="side1" role="button" tabindex="0" aria-label="Tambah skor Pasukan 1">
       <span class="name" id="name1">Pasukan 1</span>
       <span class="score" id="score1">0</span>
@@ -917,6 +951,7 @@
       <span class="score" id="score2">0</span>
       <button class="minus" id="minus2" type="button" aria-label="Tolak skor Pasukan 2">&minus;</button>
     </div>
+    <p class="input-locked-banner">🔒 Skrin dikunci — kawalan guna phone (Controller)</p>
   </main>
 
   <div class="win-overlay" id="winOverlay" role="alertdialog" aria-live="assertive">
@@ -1016,6 +1051,29 @@
   const winMargin = document.getElementById('winMargin');
 
   let targetScore = 0;
+
+  // ---------- Lock local screen input (score still controllable from phone) ----------
+  const LOCK_KEY = 'skor-lawan-input-locked';
+  const counterMain = document.getElementById('counterMain');
+  const lockScreenBtn = document.getElementById('lockScreenBtn');
+  let localInputLocked = false;
+
+  function setInputLocked(locked) {
+    localInputLocked = locked;
+    counterMain.classList.toggle('input-locked', locked);
+    lockScreenBtn.textContent = locked ? '🔒 Skrin Dikunci' : '🔓 Kunci Skrin';
+    lockScreenBtn.classList.toggle('active', locked);
+    lockScreenBtn.setAttribute('aria-pressed', locked ? 'true' : 'false');
+    try { localStorage.setItem(LOCK_KEY, locked ? '1' : '0'); } catch (err) {}
+  }
+
+  lockScreenBtn.addEventListener('click', () => setInputLocked(!localInputLocked));
+
+  (function restoreInputLock() {
+    let saved = '0';
+    try { saved = localStorage.getItem(LOCK_KEY) || '0'; } catch (err) {}
+    setInputLocked(saved === '1');
+  })();
 
   // ---------- Firework animation ----------
   const fx = (function initFireworks() {
@@ -1311,10 +1369,12 @@
     teamActions[teamNum] = { increment, decrement };
 
     sideEl.addEventListener('click', (e) => {
+      if (localInputLocked) return;
       if (e.target === minusEl) return;
       increment();
     });
     sideEl.addEventListener('keydown', (e) => {
+      if (localInputLocked) return;
       if ((e.key === 'Enter' || e.key === ' ') && e.target === sideEl) {
         e.preventDefault();
         increment();
@@ -1322,6 +1382,7 @@
     });
     minusEl.addEventListener('click', (e) => {
       e.stopPropagation();
+      if (localInputLocked) return;
       decrement();
     });
   }
