@@ -71,8 +71,10 @@
     font-family: "Manrope", "Segoe UI", system-ui, sans-serif;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    height: 100vh; /* fallback for browsers without dvh support */
+    height: 100dvh; /* tracks the actual visible viewport as the address bar shows/hides */
     overflow-x: hidden;
+    overflow-y: auto;
   }
 
   /* ---------- Setup screen ---------- */
@@ -545,6 +547,8 @@
     display: grid;
     grid-template-columns: 1fr 4px 1fr;
     position: relative;
+    min-height: 0;
+    min-width: 0;
   }
 
   /* Local taps disabled — score is being controlled from the phone (Controller). */
@@ -580,8 +584,51 @@
   }
 
   @media (max-width: 640px) {
-    main { grid-template-columns: 1fr; grid-template-rows: 1fr 4px 1fr; }
-    .divider { width: 100%; height: 4px !important; }
+    /* Keep the side-by-side (left/right) layout on phones too, matching the
+       Controller app's pad layout, instead of stacking teams top/bottom. */
+    .score { font-size: clamp(3rem, 24vw, 8.5rem); }
+
+    .name {
+      top: 0.55rem;
+      left: 0.5rem;
+      right: 0.5rem;
+      font-size: clamp(0.85rem, 5vw, 1.3rem);
+      text-align: center;
+    }
+
+    .minus {
+      width: 2.2rem;
+      height: 2.2rem;
+      bottom: 0.4rem;
+      font-size: 1rem;
+    }
+
+    header {
+      flex-wrap: wrap;
+      padding: 0.5rem 0.7rem;
+      gap: 0.4rem;
+    }
+
+    .header-actions {
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      width: 100%;
+    }
+
+    .header-actions .ghost-btn {
+      font-size: 0.66rem;
+      padding: 0.4rem 0.7rem;
+      letter-spacing: 0.03em;
+    }
+
+    .theme-toggle-btn, #lockScreenBtn.theme-toggle-btn { width: 2.2rem; height: 2.2rem; }
+
+    .brand { width: 100%; }
+
+    .link-badge { flex-wrap: wrap; row-gap: 0.3rem; }
+
+    .setup { padding-top: 4.8rem; gap: 1.5rem; }
+    .setup h1 { font-size: clamp(1.3rem, 6.5vw, 1.9rem); }
   }
 
   /* A single bright grey line down the middle — clean and visible without
@@ -600,6 +647,8 @@
     -webkit-tap-highlight-color: transparent;
     position: relative;
     overflow: hidden;
+    min-height: 0;
+    min-width: 0;
     transition: background-color 0.12s ease;
   }
 
@@ -626,7 +675,7 @@
   .score {
     font-family: "Bebas Neue", "Arial Narrow", sans-serif;
     font-weight: 400;
-    font-size: 600px;
+    font-size: clamp(5rem, min(32vw, 46vh), 26rem);
     line-height: 0.8;
     letter-spacing: 0.01em;
     font-variant-numeric: tabular-nums;
