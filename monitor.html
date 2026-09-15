@@ -100,17 +100,17 @@
     border-radius: 50%;
     border: 1px solid var(--line);
     background: var(--surface);
-    font-size: 1.2rem;
-    line-height: 1;
+    color: var(--ink-soft);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     box-shadow: 0 1px 3px var(--shadow);
-    transition: transform 0.15s ease, border-color 0.15s ease;
+    transition: transform 0.15s ease, border-color 0.15s ease, color 0.15s ease;
   }
 
-  .settings-icon-btn:hover { transform: rotate(35deg); border-color: var(--ink-soft); }
+  .settings-icon-btn svg { width: 1.3rem; height: 1.3rem; display: block; }
+  .settings-icon-btn:hover { transform: rotate(35deg); border-color: var(--ink-soft); color: var(--ink); }
   .settings-icon-btn:focus-visible { outline: 2px solid var(--ink-soft); outline-offset: 2px; }
 
   .theme-toggle-btn {
@@ -227,6 +227,42 @@
   }
 
   .settings-done-btn { align-self: center; padding: 0.75rem 2.2rem; }
+
+  /* ---------- Set Pasukan modal (edit teams while already in the score screen) ---------- */
+
+  .teams-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: color-mix(in srgb, var(--bg) 70%, transparent);
+    backdrop-filter: blur(4px);
+    z-index: 65;
+  }
+
+  .teams-modal.visible { display: flex; }
+
+  .teams-card {
+    width: 100%;
+    max-width: 22rem;
+    max-height: 90vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    padding: 1.6rem;
+    box-shadow: 0 1rem 2.5rem var(--shadow);
+    text-align: left;
+  }
+
+  .teams-card h2 { margin: 0; font-size: 1.1rem; letter-spacing: 0.02em; }
+  .teams-card p.teams-hint { margin: -0.6rem 0 0; font-size: 0.78rem; color: var(--ink-soft); }
+  .teams-apply-btn { align-self: center; padding: 0.75rem 2.2rem; }
 
   /* ---------- Offline QR link modal ---------- */
 
@@ -345,6 +381,7 @@
 
   .field input,
   .field select {
+    width: 100%;
     font-family: inherit;
     font-size: 1.05rem;
     font-weight: 600;
@@ -366,6 +403,10 @@
     grid-template-columns: 1fr 1fr;
     gap: 0.8rem;
   }
+
+  /* Grid items default to a min-width based on their content, which for a
+     number input can be wider than the 1fr track — let them shrink to fit. */
+  .field-row .field { min-width: 0; }
 
   .start-btn {
     font-family: inherit;
@@ -1124,7 +1165,12 @@
       <path class="theme-icon-moon" d="M20.4 14.7A8.6 8.6 0 1 1 9.3 3.6a7 7 0 0 0 11.1 11.1z"/>
     </svg>
   </button>
-  <button class="settings-icon-btn" id="settingsBtn" type="button" aria-label="Tetapan Match Point" aria-haspopup="dialog">⚙️</button>
+  <button class="settings-icon-btn" id="settingsBtn" type="button" aria-label="Tetapan Match Point" aria-haspopup="dialog">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="3"/>
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+    </svg>
+  </button>
 
   <div class="settings-modal" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
     <div class="settings-card">
@@ -1181,6 +1227,7 @@
           <path class="theme-icon-moon" d="M20.4 14.7A8.6 8.6 0 1 1 9.3 3.6a7 7 0 0 0 11.1 11.1z"/>
         </svg>
       </button>
+      <button class="ghost-btn" id="teamsBtn" type="button">Set Pasukan</button>
       <button class="ghost-btn" id="lockScreenBtn" type="button" aria-pressed="false">🔓 Kunci Skrin</button>
       <button class="ghost-btn" id="swapBtn" type="button">Tukar Tempat</button>
       <button class="ghost-btn" id="fullscreenBtn" type="button">Skrin Penuh</button>
@@ -1226,6 +1273,51 @@
       </span>
       <span class="win-margin" id="winMargin">Menang dengan 1 mata</span>
     </div>
+  </div>
+</div>
+
+<!-- Lets the referee edit team names/group/match/target while already on the
+     score screen, without going back to the setup screen. Applying it logs
+     the current match to history and starts fresh, same as the Controller's
+     remote "Set Perlawanan". -->
+<div class="teams-modal" id="teamsModal" role="dialog" aria-modal="true" aria-labelledby="teamsModalTitle">
+  <div class="teams-card">
+    <h2 id="teamsModalTitle">Set Pasukan</h2>
+    <p class="teams-hint">Perlawanan semasa akan disimpan ke sejarah, dan perlawanan baru bermula dengan butiran ini.</p>
+    <div class="setup-fields">
+      <div class="field team-a">
+        <label for="teamsTeam1Input">Nama Pasukan 1</label>
+        <input id="teamsTeam1Input" type="text" placeholder="Pasukan 1" maxlength="24" autocomplete="off">
+      </div>
+      <div class="field team-b">
+        <label for="teamsTeam2Input">Nama Pasukan 2</label>
+        <input id="teamsTeam2Input" type="text" placeholder="Pasukan 2" maxlength="24" autocomplete="off">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="teamsGroupInput">Kumpulan</label>
+          <select id="teamsGroupInput">
+            <option value="">Tiada</option>
+            <option value="Group A">Group A</option>
+            <option value="Group B">Group B</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="teamsMatchInput">Perlawanan Ke-</label>
+          <input id="teamsMatchInput" type="number" placeholder="1" min="1" inputmode="numeric">
+        </div>
+      </div>
+      <div class="field">
+        <label for="teamsEventNameInput">Nama Perlawanan (opsyenal)</label>
+        <input id="teamsEventNameInput" type="text" placeholder="Contoh: Volleyball" maxlength="24" autocomplete="off" style="text-transform: capitalize;">
+      </div>
+      <div class="field">
+        <label for="teamsTargetInput">Skor Menang (opsyenal)</label>
+        <input id="teamsTargetInput" type="number" placeholder="Tiada had" min="1" inputmode="numeric">
+      </div>
+    </div>
+    <button class="start-btn teams-apply-btn" id="teamsApplyBtn" type="button">Guna</button>
+    <button class="ghost-btn" id="teamsCancelBtn" type="button" style="align-self: center;">Batal</button>
   </div>
 </div>
 
@@ -2013,6 +2105,50 @@
 
     startGame();
   }
+
+  // ---------- Set Pasukan (edit teams locally while already in the score screen) ----------
+  const teamsBtn = document.getElementById('teamsBtn');
+  const teamsModal = document.getElementById('teamsModal');
+  const teamsApplyBtn = document.getElementById('teamsApplyBtn');
+  const teamsCancelBtn = document.getElementById('teamsCancelBtn');
+  const teamsTeam1Input = document.getElementById('teamsTeam1Input');
+  const teamsTeam2Input = document.getElementById('teamsTeam2Input');
+  const teamsGroupInput = document.getElementById('teamsGroupInput');
+  const teamsMatchInput = document.getElementById('teamsMatchInput');
+  const teamsEventNameInput = document.getElementById('teamsEventNameInput');
+  const teamsTargetInput = document.getElementById('teamsTargetInput');
+
+  function openTeamsModal() {
+    teamsTeam1Input.value = nameEl1.textContent || '';
+    teamsTeam2Input.value = nameEl2.textContent || '';
+    teamsGroupInput.value = groupInput.value;
+    teamsMatchInput.value = matchInput.value;
+    teamsEventNameInput.value = eventNameInput.value;
+    teamsTargetInput.value = targetInput.value;
+    teamsModal.classList.add('visible');
+    teamsTeam1Input.focus();
+  }
+
+  function closeTeamsModal() {
+    teamsModal.classList.remove('visible');
+  }
+
+  teamsBtn.addEventListener('click', openTeamsModal);
+  teamsCancelBtn.addEventListener('click', closeTeamsModal);
+  teamsModal.addEventListener('click', (e) => {
+    if (e.target === teamsModal) closeTeamsModal();
+  });
+  teamsApplyBtn.addEventListener('click', () => {
+    applyRemoteSetup({
+      team1: teamsTeam1Input.value,
+      team2: teamsTeam2Input.value,
+      group: teamsGroupInput.value,
+      matchNo: teamsMatchInput.value,
+      eventName: teamsEventNameInput.value,
+      target: teamsTargetInput.value,
+    });
+    closeTeamsModal();
+  });
 
   function handleControllerMessage(msg) {
     if (!msg || !msg.type) return;

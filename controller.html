@@ -477,6 +477,7 @@
 
   .field input,
   .field select {
+    width: 100%;
     font-family: inherit;
     font-size: 1rem;
     font-weight: 600;
@@ -492,6 +493,8 @@
     outline: 2px solid var(--ink-soft);
     outline-offset: 1px;
   }
+
+  .field-row .field { min-width: 0; }
 
   .field-row {
     display: grid;
