@@ -663,14 +663,10 @@
   .side.p1 { --accent: var(--p1); --tint: var(--p1-soft); }
   .side.p2 { --accent: var(--p2); --tint: var(--p2-soft); }
 
-  /* Mark whichever side currently has the serve — a distinctly tinted
-     background wash plus a small "Servis" badge with a ball icon, so it
-     reads clearly from across the court. Tap the badge to set/correct it
-     manually; it also updates automatically whenever that side scores. */
-  .side.serving {
-    background: color-mix(in srgb, var(--accent) 7%, var(--bg));
-    box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--accent) 32%, transparent);
-  }
+  /* Mark whichever side currently has the serve — just a small "Servis"
+     badge with a dot, no change to the side's own background/colour. Tap
+     the badge to set/correct it manually; it also updates automatically
+     whenever that side scores. */
 
   .name {
     position: absolute;
@@ -710,11 +706,13 @@
     box-shadow: 0 1px 3px var(--shadow);
     opacity: 0;
     pointer-events: none;
-    transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease, opacity 0.18s ease;
+    transition: opacity 0.18s ease, transform 0.12s ease;
     z-index: 2;
   }
 
-  .serve-badge:hover { border-color: var(--accent); color: var(--accent); }
+  /* Tap feedback — a quick press response, plus the badge itself switches to
+     the team's own accent colour once that side is serving. */
+  .serve-badge:active { transform: translateX(-50%) scale(0.9); }
   .serve-badge:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
   .serve-badge .serve-dot {
@@ -726,9 +724,10 @@
     transition: background 0.15s ease;
   }
 
-  /* Only the side currently holding serve shows the badge. Before any serve
-     has been assigned, both sides show a faint, still-tappable hint so the
-     referee can pick who serves first. */
+  /* Only the side currently holding serve shows the badge — the side's own
+     background stays unchanged. Before any serve has been assigned, both
+     sides show a faint, still-tappable hint so the referee can pick who
+     serves first. */
   .side.serve-hint .serve-badge {
     opacity: 0.5;
     pointer-events: auto;
