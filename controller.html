@@ -293,6 +293,60 @@
     white-space: nowrap;
   }
 
+  /* Serve indicator — mirrors the Monitor: only the pad currently holding
+     serve shows this badge, so the referee can see it at a glance too. */
+  .pad-serve-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.32rem;
+    padding: 0.24rem 0.65rem 0.24rem 0.5rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink-soft);
+    font-family: inherit;
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: pointer;
+    box-shadow: 0 1px 3px var(--shadow);
+    opacity: 0;
+    pointer-events: none;
+    transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease, opacity 0.18s ease;
+  }
+
+  .pad-serve-badge:hover { border-color: var(--accent); color: var(--accent); }
+  .pad-serve-badge:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .pad-serve-badge .pad-serve-dot {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: var(--line);
+    flex-shrink: 0;
+    transition: background 0.15s ease;
+  }
+
+  .pad.serve-hint .pad-serve-badge {
+    opacity: 0.5;
+    pointer-events: auto;
+  }
+
+  .pad.serving .pad-serve-badge {
+    opacity: 1;
+    pointer-events: auto;
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+    background: color-mix(in srgb, var(--accent) 14%, var(--surface));
+    color: var(--accent);
+  }
+
+  .pad.serving .pad-serve-badge .pad-serve-dot {
+    background: var(--accent);
+    box-shadow: 0 0 0.5rem color-mix(in srgb, var(--accent) 70%, transparent);
+  }
+
   .pad-score {
     font-family: "Bebas Neue", "Arial Narrow", sans-serif;
     font-size: clamp(4rem, 20vw, 7rem);
@@ -506,12 +560,18 @@
   <main id="controlMain">
     <div class="pad p1" id="pad1" role="button" tabindex="0" aria-label="Tambah skor Pasukan 1">
       <span class="pad-name" id="padName1">Pasukan 1</span>
+      <button class="pad-serve-badge" id="padServe1" type="button" aria-label="Tanda Pasukan 1 sedang servis" aria-pressed="false">
+        <span class="pad-serve-dot"></span>Servis
+      </button>
       <span class="pad-score" id="padScore1">0</span>
       <button class="pad-minus" id="padMinus1" type="button" aria-label="Tolak skor Pasukan 1">&minus;</button>
       <span class="pad-hint">Tap untuk +1</span>
     </div>
     <div class="pad p2" id="pad2" role="button" tabindex="0" aria-label="Tambah skor Pasukan 2">
       <span class="pad-name" id="padName2">Pasukan 2</span>
+      <button class="pad-serve-badge" id="padServe2" type="button" aria-label="Tanda Pasukan 2 sedang servis" aria-pressed="false">
+        <span class="pad-serve-dot"></span>Servis
+      </button>
       <span class="pad-score" id="padScore2">0</span>
       <button class="pad-minus" id="padMinus2" type="button" aria-label="Tolak skor Pasukan 2">&minus;</button>
       <span class="pad-hint">Tap untuk +1</span>
@@ -577,6 +637,10 @@
   const padName2 = document.getElementById('padName2');
   const padScore1 = document.getElementById('padScore1');
   const padScore2 = document.getElementById('padScore2');
+  const pad1El = document.getElementById('pad1');
+  const pad2El = document.getElementById('pad2');
+  const padServe1 = document.getElementById('padServe1');
+  const padServe2 = document.getElementById('padServe2');
 
   let peer = null;
   let conn = null;
@@ -611,6 +675,15 @@
     // otherwise a stray tap on the controller keeps changing the score underneath it.
     scoringLocked = !!state.winning;
     controlMain.classList.toggle('scoring-locked', scoringLocked);
+
+    // Serve indicator — mirrors whichever side the Monitor says is serving.
+    const servingTeam = state.servingTeam === 1 || state.servingTeam === 2 ? state.servingTeam : 0;
+    pad1El.classList.toggle('serving', servingTeam === 1);
+    pad2El.classList.toggle('serving', servingTeam === 2);
+    pad1El.classList.toggle('serve-hint', servingTeam === 0);
+    pad2El.classList.toggle('serve-hint', servingTeam === 0);
+    padServe1.setAttribute('aria-pressed', servingTeam === 1 ? 'true' : 'false');
+    padServe2.setAttribute('aria-pressed', servingTeam === 2 ? 'true' : 'false');
   }
 
   function send(msg) {
@@ -867,6 +940,15 @@
 
   bindPad(document.getElementById('pad1'), document.getElementById('padMinus1'), 1);
   bindPad(document.getElementById('pad2'), document.getElementById('padMinus2'), 2);
+
+  // Tap the serve badge to set/correct who's serving — toggles off (back to
+  // "unset", showing both faint hints) if that side is already marked.
+  function toggleServe(team) {
+    const current = lastState.servingTeam === 1 || lastState.servingTeam === 2 ? lastState.servingTeam : 0;
+    send({ type: 'serve', team: current === team ? 0 : team });
+  }
+  padServe1.addEventListener('click', (e) => { e.stopPropagation(); toggleServe(1); });
+  padServe2.addEventListener('click', (e) => { e.stopPropagation(); toggleServe(2); });
 
   document.getElementById('ctrlSwapBtn').addEventListener('click', () => send({ type: 'swap' }));
   document.getElementById('ctrlResetBtn').addEventListener('click', () => send({ type: 'reset' }));
