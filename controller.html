@@ -245,13 +245,32 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    /* Name/serve badge pinned to the top, minus/hint pinned to the bottom,
+       with the big score number centred in whatever space is left between
+       them — so the tap-to-score area reads clearly at the bottom half. */
+    justify-content: space-between;
     gap: 0.6rem;
     padding: 1rem 0.5rem;
     cursor: pointer;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
     transition: background-color 0.12s ease;
+  }
+
+  .pad-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .pad-foot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
   }
 
   .pad.p1 { --accent: var(--p1); --tint: var(--p1-soft); border-left: none; order: 1; }
@@ -351,6 +370,8 @@
   }
 
   .pad-score {
+    display: flex;
+    align-items: center;
     font-family: "Bebas Neue", "Arial Narrow", sans-serif;
     font-size: clamp(4rem, 20vw, 7rem);
     line-height: 1;
@@ -565,22 +586,30 @@
 
   <main id="controlMain">
     <div class="pad p1" id="pad1" role="button" tabindex="0" aria-label="Tambah skor Pasukan 1">
-      <span class="pad-name" id="padName1">Pasukan 1</span>
-      <button class="pad-serve-badge" id="padServe1" type="button" aria-label="Tanda Pasukan 1 sedang servis" aria-pressed="false">
-        <span class="pad-serve-dot"></span>Servis
-      </button>
+      <div class="pad-head">
+        <span class="pad-name" id="padName1">Pasukan 1</span>
+        <button class="pad-serve-badge" id="padServe1" type="button" aria-label="Tanda Pasukan 1 sedang servis" aria-pressed="false">
+          <span class="pad-serve-dot"></span>Servis
+        </button>
+      </div>
       <span class="pad-score" id="padScore1">0</span>
-      <button class="pad-minus" id="padMinus1" type="button" aria-label="Tolak skor Pasukan 1">&minus;</button>
-      <span class="pad-hint">Tap untuk +1</span>
+      <div class="pad-foot">
+        <button class="pad-minus" id="padMinus1" type="button" aria-label="Tolak skor Pasukan 1">&minus;</button>
+        <span class="pad-hint">Tap untuk +1</span>
+      </div>
     </div>
     <div class="pad p2" id="pad2" role="button" tabindex="0" aria-label="Tambah skor Pasukan 2">
-      <span class="pad-name" id="padName2">Pasukan 2</span>
-      <button class="pad-serve-badge" id="padServe2" type="button" aria-label="Tanda Pasukan 2 sedang servis" aria-pressed="false">
-        <span class="pad-serve-dot"></span>Servis
-      </button>
+      <div class="pad-head">
+        <span class="pad-name" id="padName2">Pasukan 2</span>
+        <button class="pad-serve-badge" id="padServe2" type="button" aria-label="Tanda Pasukan 2 sedang servis" aria-pressed="false">
+          <span class="pad-serve-dot"></span>Servis
+        </button>
+      </div>
       <span class="pad-score" id="padScore2">0</span>
-      <button class="pad-minus" id="padMinus2" type="button" aria-label="Tolak skor Pasukan 2">&minus;</button>
-      <span class="pad-hint">Tap untuk +1</span>
+      <div class="pad-foot">
+        <button class="pad-minus" id="padMinus2" type="button" aria-label="Tolak skor Pasukan 2">&minus;</button>
+        <span class="pad-hint">Tap untuk +1</span>
+      </div>
     </div>
   </main>
   <p class="locked-banner">Menunggu keputusan di Monitor…</p>
